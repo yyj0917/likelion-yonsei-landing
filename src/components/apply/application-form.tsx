@@ -1,426 +1,238 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { applicationSchema, type ApplicationFormData } from '@/lib/validations/application';
-import { submitApplication } from '@/actions/application';
+import { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { SOCIAL_LINKS } from '@/constants/site';
+import { APPLICATION_PERIOD, RECRUITMENT_TIMELINE } from '@/data/recruitment';
+import { APPLY_TRACKS } from '@/data/tracks';
 
-const TRACK_OPTIONS = [
-  { value: 'frontend', label: 'Frontend' },
-  { value: 'backend', label: 'Backend' },
-  { value: 'design-pm', label: 'Design-PM' },
-] as const;
+/**
+ * 현재 시각 기준으로 서류 접수 상태를 판별합니다.
+ * @returns 접수 전 / 접수 중 / 접수 마감에 따른 UI 상태 객체
+ */
+function getApplicationStatus(now: Date) {
+  if (now < APPLICATION_PERIOD.start) {
+    const diff = APPLICATION_PERIOD.start.getTime() - now.getTime();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return {
+      isOpen: false,
+      label: `서류 접수까지 ${days}일 남았습니다`,
+      buttonText: '아직 접수 기간이 아닙니다',
+    };
+  }
 
-const INTERVIEW_QUESTIONS = [
-  {
-    id: 'answer_1',
-    label: '자기소개',
-    description: '자신을 소개해주세요. (최소 100자)',
-  },
-  {
-    id: 'answer_2',
-    label: '지원동기',
-    description: '멋쟁이사자처럼 연세대학교에 지원하게 된 동기를 작성해주세요. (최소 100자)',
-  },
-  {
-    id: 'answer_3',
-    label: '개발 경험 또는 프로젝트 경험',
-    description: '개발 경험이나 프로젝트 경험이 있다면 자세히 설명해주세요. (최소 100자)',
-  },
-  {
-    id: 'answer_4',
-    label: '앞으로의 목표 또는 기대하는 것',
-    description: '멋쟁이사자처럼에서 이루고 싶은 목표나 기대하는 것을 작성해주세요. (최소 100자)',
-  },
-  {
-    id: 'answer_5',
-    label: '팀워크 또는 협업 경험',
-    description: '팀워크나 협업 경험이 있다면 자세히 설명해주세요. (최소 100자)',
-  },
-] as const;
+  if (now > APPLICATION_PERIOD.end) {
+    return {
+      isOpen: false,
+      label: '서류 접수가 마감되었습니다',
+      buttonText: '접수가 마감되었습니다',
+    };
+  }
 
-export function ApplicationForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null;
-    message: string;
-  }>({ type: null, message: '' });
-
-  const form = useForm<ApplicationFormData>({
-    resolver: zodResolver(applicationSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
-      student_id: '',
-      major: '',
-      grade: '',
-      track: undefined,
-      answer_1: '',
-      answer_2: '',
-      answer_3: '',
-      answer_4: '',
-      answer_5: '',
-      portfolio_url: '',
-      github_url: '',
-      additional_info: '',
-    },
-  });
-
-  const onSubmit = async (data: ApplicationFormData) => {
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
-
-    try {
-      const result = await submitApplication(data);
-      
-      if (result.success) {
-        setSubmitStatus({
-          type: 'success',
-          message: '지원서가 성공적으로 제출되었습니다!',
-        });
-        form.reset();
-        // 성공 메시지 후 스크롤 상단으로
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        setSubmitStatus({
-          type: 'error',
-          message: result.error || '지원서 제출에 실패했습니다.',
-        });
-      }
-    } catch (error) {
-      setSubmitStatus({
-        type: 'error',
-        message: '예상치 못한 오류가 발생했습니다. 다시 시도해주세요.',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  return {
+    isOpen: true,
+    label: '서류 접수가 진행 중입니다!',
+    buttonText: '지원하기',
   };
+}
+
+/**
+ * 지원하기 페이지 — 지원 양식 및 안내
+ *
+ * 구성:
+ * 1. 접수 상태 배너 (접수 전 / 접수 중 / 마감)
+ * 2. 모집 트랙 카드 3개
+ * 3. 모집 일정 타임라인
+ * 4. 지원 안내 사항
+ * 5. 구글 폼 CTA 버튼
+ *
+ * @data SOCIAL_LINKS (from @/constants/site) — 구글 폼 URL, 인스타그램 링크
+ * @data APPLICATION_PERIOD (from @/data/recruitment) — 접수 시작/종료 시각
+ * @data RECRUITMENT_TIMELINE (from @/data/recruitment) — 전체 모집 일정
+ * @data APPLY_TRACKS (from @/data/tracks) — 트랙 선택 카드 데이터
+ */
+export function ApplicationForm() {
+  const status = useMemo(() => getApplicationStatus(new Date()), []);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* 제출 상태 메시지 */}
-          {submitStatus.type && (
-            <Card className={submitStatus.type === 'success' ? 'bg-green-950/20 border-green-500' : 'bg-red-950/20 border-red-500'}>
-              <CardContent className="pt-6">
-                <p className={submitStatus.type === 'success' ? 'text-green-400' : 'text-red-400'}>
-                  {submitStatus.message}
-                </p>
+    <div className="max-w-4xl mx-auto px-6 py-8 space-y-10">
+      {/* 접수 상태 배너 */}
+      <div
+        className={`rounded-2xl border p-6 text-center ${
+          status.isOpen
+            ? 'border-likelion-orange/40 bg-likelion-orange/10'
+            : 'border-white/10 bg-white/5'
+        }`}
+      >
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <span
+            className={`inline-block h-3 w-3 rounded-full ${
+              status.isOpen
+                ? 'bg-green-400 animate-pulse'
+                : 'bg-gray-500'
+            }`}
+          />
+          <span
+            className={`text-sm font-semibold tracking-wide ${
+              status.isOpen ? 'text-likelion-orange' : 'text-gray-400'
+            }`}
+          >
+            {status.isOpen ? 'NOW OPEN' : 'CLOSED'}
+          </span>
+        </div>
+        <p className="text-white text-lg font-bold">{status.label}</p>
+        <p className="text-gray-400 text-sm mt-1">
+          접수 기간: 2026.02.19 (목) 00:00 ~ 02.25 (수) 23:59
+        </p>
+      </div>
+
+      {/* 모집 트랙 */}
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          모집 트랙
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {APPLY_TRACKS.map((track) => (
+            <Card
+              key={track.name}
+              className="bg-white/5 border-white/10 hover:border-likelion-orange/30 transition-colors"
+            >
+              <CardHeader className="pb-2">
+                <div className="text-3xl mb-2">{track.icon}</div>
+                <CardTitle className="text-white text-lg">
+                  {track.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-400 text-sm">{track.description}</p>
               </CardContent>
             </Card>
-          )}
+          ))}
+        </div>
+      </section>
 
-          {/* 기본 정보 섹션 */}
-          <Card className="bg-white/5 border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white">기본 정보</CardTitle>
-              <CardDescription className="text-gray-400">
-                지원에 필요한 기본 정보를 입력해주세요.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">이름 *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="홍길동"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">이메일 *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="example@yonsei.ac.kr"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">전화번호 *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="010-1234-5678"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormDescription className="text-gray-500">
-                        010-XXXX-XXXX 형식으로 입력해주세요.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="student_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">학번 *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="2024123456"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="major"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">전공</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="컴퓨터과학과"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="grade"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">학년</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="1학년"
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 트랙 선택 섹션 */}
-          <Card className="bg-white/5 border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white">트랙 선택</CardTitle>
-              <CardDescription className="text-gray-400">
-                지원하고자 하는 트랙을 선택해주세요.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FormField
-                control={form.control}
-                name="track"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">트랙 *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-white/5 border-white/10 text-white">
-                          <SelectValue placeholder="트랙을 선택해주세요" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-gray-900 border-white/10">
-                        {TRACK_OPTIONS.map((option) => (
-                          <SelectItem
-                            key={option.value}
-                            value={option.value}
-                            className="text-white focus:bg-white/10"
-                          >
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
-          {/* 면접 질문 섹션 */}
-          <Card className="bg-white/5 border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white">면접 질문</CardTitle>
-              <CardDescription className="text-gray-400">
-                아래 질문에 대해 자세히 답변해주세요. (각 질문 최소 100자)
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {INTERVIEW_QUESTIONS.map((question) => (
-                <FormField
-                  key={question.id}
-                  control={form.control}
-                  name={question.id as keyof ApplicationFormData}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">{question.label} *</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder={question.description}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 min-h-[120px]"
-                        />
-                      </FormControl>
-                      <FormDescription className="text-gray-500">
-                        {field.value?.length || 0}자 / 최소 100자
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+      {/* 모집 일정 */}
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          모집 일정
+        </h2>
+        <Card className="bg-white/5 border-white/10">
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              {RECRUITMENT_TIMELINE.map((item, i) => (
+                <div
+                  key={i}
+                  className={`flex items-start gap-4 rounded-lg px-4 py-3 ${
+                    item.highlight
+                      ? 'bg-likelion-orange/10 border border-likelion-orange/20'
+                      : ''
+                  }`}
+                >
+                  <span
+                    className={`shrink-0 mt-0.5 inline-block h-2.5 w-2.5 rounded-full ${
+                      item.highlight ? 'bg-likelion-orange' : 'bg-yonsei-light'
+                    }`}
+                  />
+                  <div>
+                    <p
+                      className={`text-sm font-semibold ${
+                        item.highlight
+                          ? 'text-likelion-orange'
+                          : 'text-gray-400'
+                      }`}
+                    >
+                      {item.date}
+                    </p>
+                    <p className="text-white font-medium">{item.title}</p>
+                  </div>
+                </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
 
-          {/* 추가 정보 섹션 */}
-          <Card className="bg-white/5 border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white">추가 정보</CardTitle>
-              <CardDescription className="text-gray-400">
-                포트폴리오, GitHub 등 추가 정보를 입력해주세요. (선택사항)
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <FormField
-                control={form.control}
-                name="portfolio_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">포트폴리오 URL</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="url"
-                        placeholder="https://portfolio.example.com"
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      {/* 유의사항 */}
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          지원 안내
+        </h2>
+        <Card className="bg-white/5 border-white/10">
+          <CardContent className="pt-6">
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-likelion-orange mt-1">•</span>
+                <span>
+                  지원서는 <strong className="text-white">구글 폼</strong>을
+                  통해 접수합니다.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-likelion-orange mt-1">•</span>
+                <span>
+                  접수 기간 내에만 지원이 가능하며, 기간 종료 후에는 추가 접수를
+                  받지 않습니다.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-likelion-orange mt-1">•</span>
+                <span>
+                  서류 합격자에 한해 개별 문자로 면접 일정을 안내드립니다.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-likelion-orange mt-1">•</span>
+                <span>
+                  지원 관련 문의는{' '}
+                  <a
+                    href={SOCIAL_LINKS.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yonsei-light underline underline-offset-2 hover:text-yonsei-blue transition-colors"
+                  >
+                    {SOCIAL_LINKS.instagramHandle}
+                  </a>{' '}
+                  인스타그램 DM으로 보내주세요.
+                </span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </section>
 
-              <FormField
-                control={form.control}
-                name="github_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">GitHub URL</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="url"
-                        placeholder="https://github.com/username"
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="additional_info"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">추가 정보</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="추가로 전달하고 싶은 정보가 있다면 작성해주세요."
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 min-h-[100px]"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
-          {/* 제출 버튼 */}
-          <div className="flex justify-center">
+      {/* 지원 버튼 */}
+      <div className="flex flex-col items-center gap-3 pt-4">
+        {status.isOpen ? (
+          <a
+            href={SOCIAL_LINKS.googleForm}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full max-w-md"
+          >
             <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-likelion-orange hover:bg-likelion-light text-white font-bold px-12 py-6 text-lg rounded-xl transition-all transform hover:scale-105 shadow-xl shadow-likelion-orange/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-likelion-orange hover:bg-likelion-light text-white font-bold px-12 py-7 text-lg rounded-xl transition-all transform hover:scale-[1.02] shadow-xl shadow-likelion-orange/20 cursor-pointer"
             >
-              {isSubmitting ? '제출 중...' : '지원서 제출하기'}
+              지원하기
             </Button>
-          </div>
-        </form>
-      </Form>
+          </a>
+        ) : (
+          <Button
+            disabled
+            className="w-full max-w-md bg-gray-700 text-gray-400 font-bold px-12 py-7 text-lg rounded-xl cursor-not-allowed"
+          >
+            {status.buttonText}
+          </Button>
+        )}
+        <p className="text-gray-500 text-sm">
+          버튼을 누르면 구글 폼으로 이동합니다.
+        </p>
+      </div>
     </div>
   );
 }
-

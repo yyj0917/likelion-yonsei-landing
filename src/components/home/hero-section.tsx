@@ -2,7 +2,15 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronDown, ArrowRight } from 'lucide-react';
+import { SITE_CONFIG } from '@/constants/site';
 
+/**
+ * 메인 히어로 섹션
+ * - Canvas API로 별(star) 파티클 애니메이션 배경 렌더링
+ * - 기수 배지, 메인 타이틀, CTA 버튼, 스크롤 인디케이터
+ * - 리사이즈 시 캔버스 자동 재조정
+ * @data SITE_CONFIG (from @/constants/site) — 기수 번호, 조직명
+ */
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -108,7 +116,7 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10">
         <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-yonsei-light/30 bg-yonsei-blue/20 backdrop-blur-md text-yonsei-light font-semibold text-sm tracking-widest uppercase animate-fade-in-up">
-          Yonsei University LikeLion 14th
+          Yonsei University LikeLion {SITE_CONFIG.generation}th
         </div>
         
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tighter leading-tight animate-fade-in-up delay-100">
@@ -119,7 +127,7 @@ export default function Hero() {
         </h1>
         
         <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up delay-200">
-          연세대학교 멋쟁이사자처럼 14기 아기사자를 모집합니다.<br className="hidden md:block"/>
+          {SITE_CONFIG.name} {SITE_CONFIG.generation}기 아기사자를 모집합니다.<br className="hidden md:block"/>
           당신의 아이디어를 현실로 만드는 여정을 지금 시작하세요.
         </p>
 
@@ -128,7 +136,7 @@ export default function Hero() {
             href="/apply" 
             className="group relative px-8 py-4 bg-likelion-orange text-white rounded-full font-bold text-lg hover:bg-orange-600 transition-all flex items-center gap-2 overflow-hidden shadow-lg shadow-likelion-orange/20"
           >
-            <span className="relative z-10">14기 지원하기</span>
+            <span className="relative z-10">{SITE_CONFIG.generation}기 지원하기</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

@@ -153,6 +153,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    background-color: #000000;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
@@ -177,4 +182,14 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #FF7710;
   }
+}
+
+/* Radix Dialog scroll lock layout shift 방지 (@layer 밖에서 높은 specificity로 override)
+   react-remove-scroll-bar는 Dialog 열릴 때 body에 margin-right/padding-right을
+   추가하여 스크롤바 제거를 보정하지만, html의 overflow-y: scroll + scrollbar-gutter: stable이
+   이미 스크롤바 공간을 확보하고 있으므로 이중 보정을 방지합니다. */
+html > body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  --removed-body-scroll-bar-size: 0px !important;
 }

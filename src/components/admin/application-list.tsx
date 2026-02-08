@@ -15,8 +15,8 @@ import type { Application, ApplicationStatus, ApplicationTrack } from '@/types/a
 interface ApplicationListProps {
   searchParams?: {
     search?: string;
-    track?: ApplicationTrack;
-    status?: ApplicationStatus;
+    track?: string;
+    status?: string;
   };
 }
 
@@ -37,14 +37,16 @@ export async function ApplicationList({ searchParams }: ApplicationListProps) {
   }
 
   if (searchParams?.track && searchParams.track !== 'all') {
+    const track = searchParams.track as ApplicationTrack;
     filteredApplications = filteredApplications.filter(
-      (app) => app.track === searchParams.track
+      (app) => app.track === track
     );
   }
 
   if (searchParams?.status && searchParams.status !== 'all') {
+    const status = searchParams.status as ApplicationStatus;
     filteredApplications = filteredApplications.filter(
-      (app) => app.status === searchParams.status
+      (app) => app.status === status
     );
   }
 

@@ -8,7 +8,7 @@ export const applicationSchema = z.object({
   major: z.string().optional(),
   grade: z.string().optional(),
   track: z.enum(['frontend', 'backend', 'design-pm'], {
-    errorMap: () => ({ message: '트랙을 선택해주세요' })
+    error: '트랙을 선택해주세요',
   }),
   answer_1: z.string().min(100, '최소 100자 이상 작성해주세요'),
   answer_2: z.string().min(100, '최소 100자 이상 작성해주세요'),

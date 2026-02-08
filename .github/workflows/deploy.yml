@@ -1,0 +1,48 @@
+name:
+  Build & Deploy to https://github.com/yyj0917/likelion-yonsei-landing (-> Fork한 내 개인 계정 레포
+  주소)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    container: pandoc/latex
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Prepare output
+        shell: sh
+        run: |
+          # enable extglob and dotglob might not work in sh
+          # Use alternative commands for file copying
+          rm -rf output
+          mkdir output
+          # Use find command instead of extglob pattern
+          find . -maxdepth 1 -not -path "./output" -not -path "./.git" -not -path "./.github" -exec cp -R {} output/ \;
+
+      - name: Push to https://github.com/yyj0917/likelion-yonsei-landing
+        id: push
+        uses: cpina/github-action-push-to-another-repository@v1.7.2
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.LIKELION_YONSEI_LANDING_TOKEN }}
+        with:
+          source-directory: "output"
+          destination-github-username: yyj0917
+          destination-repository-name: likelion-yonsei-landing
+          user-name: GitHub Actions
+          user-email: yyj0917@yonsei.ac.kr
+          commit-message: "Deploy from build: ${{ github.sha }}"
+          target-branch: main
+
+      - name: "Debug: show cloned dir"
+        run: echo "Cloned into $DESTINATION_CLONED_DIRECTORY"
