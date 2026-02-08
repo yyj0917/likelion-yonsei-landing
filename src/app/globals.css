@@ -44,6 +44,40 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  
+  /* Yonsei and LikeLion Custom Colors */
+  --color-yonsei-blue: #003876;
+  --color-yonsei-light: #3B7BD9;
+  --color-yonsei-dark: #001E40;
+  --color-likelion-orange: #FF7710;
+  --color-likelion-light: #FF9F43;
+  
+  /* Custom Animations */
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+  --animate-fade-in-down: fade-in-down 0.5s ease-out forwards;
+}
+
+/* Custom Keyframes */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 :root {
@@ -119,7 +153,43 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    background-color: #000000;
+  }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
   }
+  
+  /* Custom scrollbar for webkit */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3B7BD9;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF7710;
+  }
+}
+
+/* Radix Dialog scroll lock layout shift 방지 (@layer 밖에서 높은 specificity로 override)
+   react-remove-scroll-bar는 Dialog 열릴 때 body에 margin-right/padding-right을
+   추가하여 스크롤바 제거를 보정하지만, html의 overflow-y: scroll + scrollbar-gutter: stable이
+   이미 스크롤바 공간을 확보하고 있으므로 이중 보정을 방지합니다. */
+html > body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  --removed-body-scroll-bar-size: 0px !important;
 }
