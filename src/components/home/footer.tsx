@@ -55,22 +55,6 @@ export default function Footer() {
               </a>
             </div>
           </div>
-
-          <div className="flex flex-col items-center md:items-end gap-6">
-            <div className="text-center md:text-right">
-              <p className="text-gray-500 text-sm mb-2">
-                모집 기간이 얼마 남지 않았습니다
-              </p>
-              <a
-                href={SOCIAL_LINKS.googleForm}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block px-8 py-4 bg-likelion-orange text-white font-bold rounded-xl hover:bg-orange-600 transition-all transform hover:scale-105 shadow-xl shadow-likelion-orange/20"
-              >
-                지금 바로 지원하기
-              </a>
-            </div>
-          </div>
         </div>
 
         <div className="border-t border-white/10 pt-8 text-center text-gray-600 text-sm">

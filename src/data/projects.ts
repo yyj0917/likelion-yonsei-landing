@@ -29,14 +29,18 @@ export interface Project {
   name: string;
   /** 한 줄 설명 (카드 hover 시 표시) */
   description: string;
+  /** 썸네일 경로 */
+  thumbnail: string;
   /** 상세 설명 (다이얼로그에서 표시) */
   longDescription: string;
   /** 해당 기수 */
   generation: number;
-  /** 카드 배경 gradient 클래스 (예: "from-emerald-400 to-teal-600") */
-  gradient: string;
-  /** GitHub 저장소 URL */
-  githubUrl?: string;
+/** GitHub 저장소 URL (FE/BE 분리) */
+  githubUrl?: {
+    frontend?: string;
+    backend?: string;
+    repo?: string; // 단일 레포일 경우를 대비
+  };
   /** 배포 URL */
   deployUrl?: string;
   /** 팀원 목록 */
@@ -55,164 +59,193 @@ export const PROJECTS: Project[] = [
   // ── 13기 프로젝트 ──
   {
     id: 1,
-    name: "HaniHome",
-    description: "해외 한인을 위한 숙소 매칭 플랫폼",
+    name: "2025 대동제",
+    description: "연세대학교 개교 140주년 무악대동제 Scent of Blue 공식 웹사이트",
+    thumbnail: "/images/projects/",
     longDescription:
-      "해외에 거주하는 한인들이 안전하고 편리하게 숙소를 구할 수 있도록 돕는 매칭 플랫폼입니다. 한국어 지원, 한인 커뮤니티 리뷰, 그리고 지역별 생활 정보를 제공하여 해외 정착을 돕습니다.",
+      "연세대학교 개교 140주년 무악대동제 Scent of Blue 공식 웹사이트는 연세의 역사와 정체성을 담은 140주년 무악대동제를 온라인에서 경험할 수 있도록 기획된 행사 안내 플랫폼입니다. 축제의 메인 콘셉트인 Scent of Blue를 시각적으로 풀어내어, 방문자가 축제의 분위기와 메시지를 자연스럽게 느낄 수 있도록 구성했으며, 공연 라인업, 일정, 부스 정보 등 핵심 정보를 직관적으로 확인할 수 있도록 설계되었습니다. 또한 학내 구성원과 외부 방문객 모두가 축제 전·중·후 필요한 정보를 쉽게 접근할 수 있도록 반응형 웹으로 구현하여, 대규모 오프라인 행사의 온라인 허브 역할을 수행했습니다.",
     generation: 13,
-    gradient: "from-emerald-400 to-teal-600",
-    githubUrl: "https://github.com/likelion-yonsei/hanihome",
-    deployUrl: "https://hanihome.vercel.app",
+    githubUrl: {
+      frontend: "https://github.com/Likelion-Yonsei-13th/SCENT-YONSEI-WEB.git",
+      backend: "https://github.com/Likelion-Yonsei-13th/SCENT-YONSEI-SERVER.git"
+    },
+    deployUrl: "https://scent-yonsei.com/",
     team: [
-      { name: "김민수", role: "Frontend" },
-      { name: "이지은", role: "Backend" },
-      { name: "박서윤", role: "Design/PM" },
-      { name: "정하준", role: "Frontend" },
+      { name: "구서영", role: "Design/PM" },
+      { name: "조윤희", role: "Design/PM" },
+      { name: "김나연", role: "Frontend" },
+      { name: "김나연", role: "Frontend" },
+      { name: "박준열", role: "Frontend" },
+      { name: "여민서", role: "Frontend" },
+      { name: "윤영준", role: "Frontend" },
+      { name: "이지호", role: "Frontend" },
+      { name: "조민", role: "Frontend" },
+      { name: "고선태", role: "Backend" },
+      { name: "변호영", role: "Backend" },
+      { name: "이수정", role: "Backend" },
+      { name: "이준영", role: "Backend" },
     ],
-    awards: ["멋쟁이사자처럼 중앙 해커톤 대상"],
-    techStack: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
+    awards: ["총 방문자: 10,772명에게 실시간 정보 제공", "사용자 참여도: 방문자당 평균 13.5페이지 조회", "사용자 경험: 16% 이탈률로 높은 사용자 경험 입증", "모바일 최적화: 93% 모바일 사용률로 현장 활용도 극대화"],
+    techStack: ["Next.js", "React", "Tailwind CSS", "Spring Boot"],
   },
   {
     id: 2,
-    name: "StudyMate",
-    description: "AI 기반 스터디 그룹 매칭 서비스",
+    name: "NestOn",
+    description: "사회초년생·대학생을 대상으로 매물 탐색부터 계약서 검토, 지역 정착까지 AI로 통합 지원하는 주거 플랫폼",
+    thumbnail: "/images/projects/NestOn.webp",
     longDescription:
-      "AI가 학습 스타일, 관심 분야, 일정을 분석하여 최적의 스터디 그룹을 매칭해주는 서비스입니다. 실시간 채팅, 공유 노트, 출석 관리 기능을 통해 효율적인 그룹 스터디를 지원합니다.",
+      "NestOn은 복잡한 부동산 정보와 계약 과정을 AI로 간편하게 해결하는 사회초년생·대학생 대상 주거 플랫폼입니다. 자연어 기반 챗봇을 통해 매물 추천, 계약서 검토, 지역 정착까지 전 과정을 통합 지원합니다.",
     generation: 13,
-    gradient: "from-blue-400 to-indigo-600",
-    githubUrl: "https://github.com/likelion-yonsei/studymate",
-    deployUrl: "https://studymate-demo.vercel.app",
+    githubUrl: {
+      frontend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-FRONTEND-NestOn.git", 
+      backend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-BACKEND-Pawsitive.git",
+    },
+    deployUrl: "",
     team: [
-      { name: "최유진", role: "Frontend" },
-      { name: "한도윤", role: "Backend" },
-      { name: "서예린", role: "Backend" },
+      { name: "이민재", role: "Design/PM" },
+      { name: "이수연", role: "Design/PM" },
+      { name: "이지호", role: "Frontend" },
+      { name: "조민", role: "Frontend" },
+      { name: "이동진", role: "Backend" },
+      { name: "표영규", role: "Backend" },
     ],
-    awards: ["교내 SW 경진대회 우수상"],
-    techStack: ["React", "Node.js", "MongoDB", "OpenAI API"],
+    awards: [],
+    techStack: ["React", "Django"],
   },
   {
     id: 3,
-    name: "CampusEats",
-    description: "대학생을 위한 공동 배달 주문 플랫폼",
+    name: "IDEALAB",
+    description: "지도 기반 AI 시뮬레이션을 통해 최적 입지와 예상 성과를 실시간으로 확인할 수 있는 예비 창업자 지원 플랫폼",
+    thumbnail: "/images/projects/IDEALAB.webp",
     longDescription:
-      "배달비 부담을 줄이기 위해 같은 건물이나 기숙사 학생들이 함께 배달 주문을 할 수 있는 플랫폼입니다. 실시간 모집, 자동 정산, 픽업 위치 지정 기능을 제공합니다.",
+      "예비 창업자가 지도 기반 AI 시뮬레이션으로 최적 입지와 예상 성과를 실시간 확인하는 플랫폼입니다.",
     generation: 13,
-    gradient: "from-orange-400 to-red-500",
-    githubUrl: "https://github.com/likelion-yonsei/campuseats",
+    githubUrl: {
+      frontend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-FRONTEND-IDEALAB.git",
+      backend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-BACKEND-IDEALAB.git",
+    },
     team: [
-      { name: "윤서준", role: "Frontend" },
-      { name: "김채원", role: "Backend" },
-      { name: "이현우", role: "Design/PM" },
-      { name: "장소연", role: "Frontend" },
+      { name: "강서현", role: "Design/PM" },
+      { name: "이윤서", role: "Design/PM" },
+      { name: "오유진", role: "Frontend" },
+      { name: "임기주", role: "Frontend" },
+      { name: "우태호", role: "Backend" },
+      { name: "이수정", role: "Backend" },
     ],
-    techStack: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
+    techStack: ["React", "Django"],
   },
-
-  // ── 12기 프로젝트 ──
   {
     id: 4,
-    name: "BookBridge",
-    description: "중고 전공서적 거래 및 나눔 플랫폼",
+    name: "픽플",
+    description: "신촌 지역 요식업 소상공인을 위해 음식 사진 보정과 레퍼런스 탐색을 지원하는 AI 기반 브랜딩 플랫폼",
+    thumbnail: "/images/projects/픽플.webp",
     longDescription:
-      "학기마다 필요한 전공서적을 선후배 간에 합리적으로 거래하거나 나눌 수 있는 플랫폼입니다. 학과별 교재 추천, 상태 인증 사진, 안전 거래 시스템을 통해 신뢰도 높은 거래를 지원합니다.",
-    generation: 12,
-    gradient: "from-purple-400 to-pink-500",
-    githubUrl: "https://github.com/likelion-yonsei/bookbridge",
-    deployUrl: "https://bookbridge.vercel.app",
+      "가게 홍보 및 브랜딩을 목적으로 감성적인 음식 사진 제작에 어려움을 겪는 신촌 지역 요식업 소상공인을 위한 AI 기반 음식 이미지 보정 & 레퍼런스 탐색 플랫폼입니다.",
+    generation: 13,
+    githubUrl: {
+      frontend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-FRONTEND-YonVoyage.git",
+      backend: "https://github.com/Likelion-Yonsei-13th/13-HACKATHON-BACKTEND-YonVoyage.git",
+    },
+    deployUrl: "",
     team: [
-      { name: "박지호", role: "Frontend" },
-      { name: "송다은", role: "Backend" },
-      { name: "오민석", role: "Frontend" },
+      { name: "김나연", role: "Design/PM" },
+      { name: "백하나", role: "Design/PM" },
+      { name: "민경준", role: "Frontend" },
+      { name: "여민서", role: "Frontend" },
+      { name: "고선태", role: "Backend" },
+      { name: "백세빈", role: "Backend" },
     ],
-    awards: ["멋쟁이사자처럼 중앙 해커톤 인기상"],
+    awards: [""],
     techStack: ["React", "Express", "MySQL", "AWS S3"],
   },
   {
     id: 5,
-    name: "MentoLink",
-    description: "선후배 간 멘토링 매칭 서비스",
+    name: "쇼츠테이블",
+    description: "사진·영상만 업로드하면 브랜드 맞춤 SNS 숏폼 홍보 영상을 자동 생성해주는 외식업 소상공인 대상 마케팅 플랫폼",
+    thumbnail: "/images/projects/",
     longDescription:
-      "같은 학과 또는 관심 분야의 선후배를 연결하여 체계적인 멘토링을 지원하는 서비스입니다. 멘토링 일지, 목표 설정, 피드백 시스템을 통해 의미 있는 성장을 돕습니다.",
-    generation: 12,
-    gradient: "from-cyan-400 to-blue-500",
-    githubUrl: "https://github.com/likelion-yonsei/mentolink",
+      "쇼츠테이블은 SNS 마케팅의 필요성은 느끼지만 실행이 어려운 외식업 소상공인을 위해, 사진·영상만으로 브랜드 맞춤 숏폼 콘텐츠를 자동 생성하는 서비스입니다. 신촌 상권의 주요 소비층인 20~30대의 SNS 소비 패턴에 맞춰 효율적인 홍보를 지원합니다.",
+    generation: 13,
+    githubUrl: {
+      frontend: "",
+      backend: "",
+    },
     team: [
-      { name: "임수빈", role: "Frontend" },
-      { name: "강현석", role: "Backend" },
-      { name: "배윤아", role: "Design/PM" },
+      { name: "강문정", role: "Design/PM" },
+      { name: "구서영", role: "Design/PM" },
+      { name: "오은성", role: "Design/PM" },
+      { name: "조윤희", role: "Design/PM" },
+      { name: "윤영준", role: "Frontend" },
+      { name: "박준열", role: "Backend" },
     ],
-    techStack: ["Vue.js", "Django", "PostgreSQL", "Docker"],
+    techStack: [],
   },
   {
     id: 6,
-    name: "GreenStep",
-    description: "일상 속 탄소 발자국 추적 앱",
+    name: "돌봄온",
+    description: "가족 간 간병 일정 조율과 기록 공유를 한 번에 해결하는 가족 간병 지원 플랫폼",
+    thumbnail: "/images/projects/돌봄온.webp",
     longDescription:
-      "일상 활동에서 발생하는 탄소 배출량을 자동으로 추적하고, 친환경 대안을 추천해주는 앱입니다. 걷기, 대중교통, 텀블러 사용 등 활동별 탄소 절감량을 시각화하여 보여줍니다.",
-    generation: 12,
-    gradient: "from-green-400 to-emerald-600",
-    githubUrl: "https://github.com/likelion-yonsei/greenstep",
-    deployUrl: "https://greenstep.vercel.app",
+      "돌봄온은 가족 간 간병 일정 조율과 기록 인수인계를 한 번에 해결하는 가족 간병 지원 서비스입니다. 공유 캘린더와 간편 로그·그래프 기능을 통해 돌봄 공백과 기록 누락을 줄이고, 가족 모두가 같은 정보를 보도록 돕습니다.",
+    generation: 13,
+    githubUrl: {
+      frontend: "",
+      backend: "",
+    },
+    deployUrl: "",
     team: [
-      { name: "정우진", role: "Frontend" },
-      { name: "김나연", role: "Backend" },
-      { name: "이태민", role: "Frontend" },
-      { name: "황서영", role: "Design/PM" },
+      { name: "강문정", role: "Design/PM" },
+      { name: "이민재", role: "Design/PM" },
+      { name: "오유진", role: "Frontend" },
+      { name: "백세빈", role: "Backend" },
+      { name: "이수정", role: "Backend" },
     ],
-    awards: ["교내 창업 경진대회 장려상"],
+    awards: [""],
     techStack: ["React Native", "Firebase", "Chart.js"],
   },
-
-  // ── 11기 프로젝트 ──
   {
     id: 7,
-    name: "TimeBuddy",
-    description: "시간표 기반 친구 매칭 서비스",
+    name: "D-TOUR",
+    description: "여행자 취향을 기반으로 로컬이 직접 맞춤 여행 일정을 설계해주는 여행 매칭 플랫폼",
+    thumbnail: "/images/projects/D-TOUR.webp",
     longDescription:
-      "대학 시간표를 기반으로 공강 시간이 겹치는 친구를 찾아주는 서비스입니다. 관심사 태그, 맛집 추천, 그룹 활동 모집 기능을 통해 캠퍼스 내 새로운 인연을 만들어줍니다.",
-    generation: 11,
-    gradient: "from-yellow-400 to-orange-500",
-    githubUrl: "https://github.com/likelion-yonsei/timebuddy",
+      "여행자 취향 기반으로 로컬(Local)이 직접 여행 일정을 맞춤 제작해주는 여행 매칭 플랫폼입니다.",
+    generation: 13,
+    githubUrl: {
+      frontend: "",
+      backend: "",
+    },
     team: [
-      { name: "조은서", role: "Frontend" },
-      { name: "신재현", role: "Backend" },
-      { name: "류하은", role: "Design/PM" },
+      { name: "강서현", role: "Design/PM" },
+      { name: "백하나", role: "Design/PM" },
+      { name: "조민", role: "Frontend" },
+      { name: "고선태", role: "Backend" },
+      { name: "표영규", role: "Backend" },
     ],
     techStack: ["Next.js", "Supabase", "Tailwind CSS"],
   },
   {
     id: 8,
-    name: "PetPal",
-    description: "반려동물 돌봄 커뮤니티 플랫폼",
+    name: "SAI",
+    description: "악의적 반응 없이 질문을 중심으로 생각을 나누고 대화를 아카이빙할 수 있는 콘텐츠 기반 대화 플랫폼",
+    thumbnail: "/images/projects/SAI.webp",
     longDescription:
-      "반려동물을 키우는 대학생들을 위한 커뮤니티 플랫폼입니다. 돌봄 품앗이, 산책 메이트 매칭, 동물 병원 리뷰, 그리고 반려동물 일상 공유 기능을 제공합니다.",
-    generation: 11,
-    gradient: "from-pink-400 to-rose-500",
-    githubUrl: "https://github.com/likelion-yonsei/petpal",
-    deployUrl: "https://petpal-demo.vercel.app",
+      "SAI는 악의적 반응 없이 생각을 나누고 싶은 사람들을 위한 질문 중심 대화 공간입니다. 콘텐츠 기반 질문과 대화 아카이빙 기능을 통해 깊이 있는 대화를 기록하고 인사이트가 휘발되지 않도록 돕습니다.",
+    generation: 13,
+    githubUrl: {
+      frontend: "https://github.com/Yonsei-Demo3/SAI-FRONT.git",
+      backend: "https://github.com/Yonsei-Demo3/BE_API.git",
+    },
+    deployUrl: "",
     team: [
-      { name: "문지원", role: "Frontend" },
-      { name: "양준혁", role: "Backend" },
-      { name: "홍서현", role: "Frontend" },
-      { name: "구민정", role: "Design/PM" },
+      { name: "오은성", role: "Design/PM" },
+      { name: "이윤서", role: "Design/PM" },
+      { name: "변호영", role: "Frontend" },
+      { name: "임기주", role: "Frontend" },
+      { name: "우태호", role: "Backend" },
+      { name: "이석원", role: "Backend" },
     ],
-    awards: ["멋쟁이사자처럼 중앙 해커톤 우수상", "교내 UX 공모전 최우수상"],
-    techStack: ["React", "Spring Boot", "MySQL", "AWS"],
-  },
-  {
-    id: 9,
-    name: "LocalPick",
-    description: "지역 소상공인 추천 큐레이션 서비스",
-    longDescription:
-      "학교 주변 숨겨진 맛집과 소상공인 가게를 큐레이션하여 추천하는 서비스입니다. 학생 리뷰, 할인 정보, 그리고 사장님과의 소통 채널을 통해 지역 상권 활성화에 기여합니다.",
-    generation: 11,
-    gradient: "from-violet-400 to-purple-600",
-    githubUrl: "https://github.com/likelion-yonsei/localpick",
-    team: [
-      { name: "차시우", role: "Frontend" },
-      { name: "노은채", role: "Backend" },
-      { name: "권태양", role: "Backend" },
-    ],
-    techStack: ["Next.js", "NestJS", "MongoDB", "Kakao Map API"],
+    awards: ["2025 신촌 대학 연합 SW 창업 경진 대회 본선 진출"],
+    techStack: ["React", "Spring Boot"],
   },
 ];
