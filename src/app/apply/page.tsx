@@ -15,7 +15,7 @@ export default function ApplyPage() {
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-6 text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              14기 <span className="text-likelion-orange">아기사자</span> 모집
+              🦁 14기 <span className="text-likelion-orange">아기사자</span> 모집 🦁
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
               멋쟁이사자처럼{" "}
