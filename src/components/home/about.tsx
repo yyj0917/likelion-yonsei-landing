@@ -18,6 +18,12 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
   );
 }
 
+const STATS = [
+  { number: "14", label: "현재 기수", suffix: "기" },
+  { number: "3", label: "트랙 운영", suffix: "개" },
+  { number: "50", label: "누적 프로젝트", suffix: "+" },
+];
+
 export default function About() {
   return (
     <section id="about" className="py-24 bg-black relative">
@@ -26,15 +32,44 @@ export default function About() {
           <h2 className="text-sm font-bold text-yonsei-light tracking-widest uppercase mb-3">
             About Us
           </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            가능성을 <span className="text-yonsei-light">현실로</span>,<br />
-            우리는 함께 성장합니다.
-          </h3>
-          <p className="text-gray-400 max-w-2xl text-lg">
-            멋쟁이사자처럼은 국내 최대 규모의 IT 창업 동아리입니다. 연세대학교
-            멋쟁이사자처럼은 기술을 통해 세상을 변화시키고자 하는 열정적인
-            학생들이 모여 서로 배우고, 나누며, 함께 성장하는 커뮤니티입니다.
-          </p>
+          <div className="mb-20">
+            {/* GRID WRAPPER */}
+            <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+              {/* LEFT TEXT BLOCK */}
+              <div>
+                <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                  가능성을 <span className="text-yonsei-light">현실로</span>,<br />
+                  우리는 함께 성장합니다.
+                </h3>
+              </div>
+
+              {/* RIGHT STATS BLOCK */}
+              <div className="flex lg:justify-end">
+                <div className="grid grid-cols-3 gap-12">
+                  {STATS.map((stat) => (
+                    <div key={stat.label}>
+                      <div className="text-5xl font-black text-white">
+                        {stat.number}
+                        <span className="text-yonsei-light text-xl ml-1">
+                          {stat.suffix}
+                        </span>
+                      </div>
+                      <div className="text-sm text-gray-500 mt-1">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <p className="text-gray-400 max-w-5xl text-lg leading-relaxed">
+                  국내 최대 규모의 IT 창업 네트워크, 멋쟁이사자처럼 연세대학교입니다. <br/>
+                  우리는 단순한 코딩을 넘어, 세상에 없던 가치를 만들어내는 Maker들의 커뮤니티입니다. <br/>
+                  치열하게 고민하고 함께 실행하며, 불가능해 보였던 아이디어를 실체 있는 서비스로 증명합니다.
+                </p>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">

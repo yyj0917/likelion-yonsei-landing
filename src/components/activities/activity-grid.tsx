@@ -270,7 +270,7 @@ export default function ActivityGrid() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="text-likelion-orange font-semibold text-sm tracking-widest uppercase">
+            <span className="text-yonsei-light font-semibold text-sm tracking-widest uppercase">
               Activities
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
