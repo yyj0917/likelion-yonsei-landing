@@ -50,7 +50,7 @@ export default function Navbar() {
               href={link.href}
               className={`text-sm font-medium transition-colors hover:scale-105 transform ${
                 pathname === link.href
-                  ? "text-likelion-orange"
+                  ? "text-yonsei-light"
                   : "text-gray-300 hover:text-white"
               }`}
             >
@@ -77,7 +77,7 @@ export default function Navbar() {
               href={link.href}
               className={`text-lg font-medium ${
                 pathname === link.href
-                  ? "text-likelion-orange"
+                  ? "text-yonsei-light"
                   : "text-gray-300 hover:text-white"
               }`}
               onClick={() => setIsMenuOpen(false)}
