@@ -253,7 +253,7 @@ export const PROJECTS: Project[] = [
     id: 9,
     name: "Mind-Window",
     description: "심리 전문가들의 매일 한 마디 위로 메시지를 통해 치료 문턱을 낮추는 심리 상담 유도 플랫폼",
-    thumbnail: "/images/projects/mind-window.png",
+    thumbnail: "/images/projects/Mind-Window.png",
     longDescription:
       "Mind-Window는 정신 질환에 대한 사회적 편견과 비용 부담으로 인해 상담을 주저하는 환자들을 위해 기획되었습니다. 전문가들이 매일 작성하는 '위로의 메시지'를 통해 고객은 상담사의 스타일을 미리 파악하고 정서적 지지를 얻을 수 있습니다. 이를 통해 심리 상담에 대한 진입 장벽을 낮추고, 검증된 전문가와 자연스럽게 연결될 수 있는 기회 비용을 최소화하는 것을 목표로 합니다.",
     generation: 12,
