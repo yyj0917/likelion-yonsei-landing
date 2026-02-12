@@ -42,7 +42,7 @@ export const SOCIAL_LINKS = {
   /** 인스타그램 핸들 (텍스트로 표시할 때 사용) */
   instagramHandle: "@likelion_yonsei",
   /** 대표 이메일 주소 */
-  email: "ehho0916@yonsei.ac.kr",
+  email: "yonsei.univ@likelion.org",
   /** 구글 폼 URL — TODO: 실제 모집 폼 URL로 교체 필요 */
   googleForm: "https://forms.gle/YOUR_FORM_ID",
   /** 기술 블로그 URL */

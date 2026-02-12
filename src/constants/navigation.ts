@@ -17,9 +17,9 @@ export interface NavLink {
 
 /** GNB 링크 목록 — 순서대로 렌더링됩니다 */
 export const NAV_LINKS: NavLink[] = [
-  { name: "소개", href: "/about" },
+  { name: "소개", href: "/" },
   // { name: '멤버', href: '/members' },  // 추후 멤버 페이지 추가 시 활성화
-  { name: "프로젝트", href: "/projects" },
   { name: "활동", href: "/activities" },
+  { name: "프로젝트", href: "/projects" },
   { name: "지원하기", href: "/apply" },
 ];

@@ -55,6 +55,8 @@ export interface TrackDetail {
   accentGradient: string;
   /** hover 시 테두리 색상 클래스 */
   accentColor: string;
+  /** 아이콘 색상 */
+  iconColor: string;
 }
 
 /** Apply 페이지 트랙 선택용 (간소화) */
@@ -123,13 +125,14 @@ export const TRACK_DETAILS: TrackDetail[] = [
       "애자일 방법론 기반 프로젝트 관리",
     ],
     techStack: [
-      { name: "Figma", color: "bg-purple-500/15 text-purple-300 border-purple-500/20" },
-      { name: "UI/UX", color: "bg-pink-500/15 text-pink-300 border-pink-500/20" },
+      { name: "Figma", color: "bg-violet-500/15 text-violet-300 border-violet-500/20" },
+      { name: "UI/UX", color: "bg-violet-500/15 text-violet-300 border-violet-500/20" },
       { name: "Prototyping", color: "bg-violet-500/15 text-violet-300 border-violet-500/20" },
-      { name: "Service Design", color: "bg-indigo-500/15 text-indigo-300 border-indigo-500/20" },
+      { name: "Service Design", color: "bg-violet-500/15 text-violet-300 border-violet-500/20" },
     ],
     accentGradient: "from-purple-500 to-pink-500",
     accentColor: "hover:border-purple-500/30",
+    iconColor: "text-purple-400",
   },
   {
     id: "frontend",
@@ -145,13 +148,14 @@ export const TRACK_DETAILS: TrackDetail[] = [
       "반응형 웹 디자인 및 성능 최적화",
     ],
     techStack: [
-      { name: "HTML/CSS", color: "bg-orange-500/15 text-orange-300 border-orange-500/20" },
-      { name: "JavaScript", color: "bg-yellow-500/15 text-yellow-300 border-yellow-500/20" },
-      { name: "React", color: "bg-cyan-500/15 text-cyan-300 border-cyan-500/20" },
-      { name: "Next.js", color: "bg-white/10 text-gray-300 border-white/10" },
+      { name: "HTML/CSS", color: "bg-blue-500/10 text-blue-300 border-blue-500/20" },
+      { name: "JavaScript", color: "bg-blue-500/10 text-blue-300 border-blue-500/20" },
+      { name: "React", color: "bg-blue-500/10 text-blue-300 border-blue-500/20" },
+      { name: "Next.js", color: "bg-blue-500/10 text-blue-300 border-blue-500/20" },
     ],
     accentGradient: "from-blue-500 to-cyan-500",
     accentColor: "hover:border-blue-500/30",
+    iconColor: "text-blue-400",
   },
   {
     id: "backend",
@@ -167,13 +171,14 @@ export const TRACK_DETAILS: TrackDetail[] = [
       "DB 설계부터 운영까지 백엔드 전반 학습",
     ],
     techStack: [
-      { name: "Spring Boot", color: "bg-green-500/15 text-green-300 border-green-500/20" },
-      { name: "Java", color: "bg-red-500/15 text-red-300 border-red-500/20" },
-      { name: "AWS", color: "bg-orange-500/15 text-orange-300 border-orange-500/20" },
-      { name: "CI/CD", color: "bg-blue-500/15 text-blue-300 border-blue-500/20" },
+      { name: "Spring Boot", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
+      { name: "Java", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
+      { name: "AWS", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
+      { name: "CI/CD", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
     ],
     accentGradient: "from-emerald-500 to-green-500",
     accentColor: "hover:border-emerald-500/30",
+    iconColor: "text-emerald-400",
   },
 ];
 
