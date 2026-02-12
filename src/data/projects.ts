@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     id: 1,
     name: "2025 대동제",
     description: "연세대학교 개교 140주년 무악대동제 Scent of Blue 공식 웹사이트",
-    thumbnail: "/images/projects/",
+    thumbnail: "/images/projects/대동제.png",
     longDescription:
       "연세대학교 개교 140주년 무악대동제 Scent of Blue 공식 웹사이트는 연세의 역사와 정체성을 담은 140주년 무악대동제를 온라인에서 경험할 수 있도록 기획된 행사 안내 플랫폼입니다. 축제의 메인 콘셉트인 Scent of Blue를 시각적으로 풀어내어, 방문자가 축제의 분위기와 메시지를 자연스럽게 느낄 수 있도록 구성했으며, 공연 라인업, 일정, 부스 정보 등 핵심 정보를 직관적으로 확인할 수 있도록 설계되었습니다. 또한 학내 구성원과 외부 방문객 모두가 축제 전·중·후 필요한 정보를 쉽게 접근할 수 있도록 반응형 웹으로 구현하여, 대규모 오프라인 행사의 온라인 허브 역할을 수행했습니다.",
     generation: 13,
@@ -162,7 +162,7 @@ export const PROJECTS: Project[] = [
     id: 5,
     name: "쇼츠테이블",
     description: "사진·영상만 업로드하면 브랜드 맞춤 SNS 숏폼 홍보 영상을 자동 생성해주는 외식업 소상공인 대상 마케팅 플랫폼",
-    thumbnail: "/images/projects/",
+    thumbnail: "/images/projects/쇼츠테이블.png",
     longDescription:
       "쇼츠테이블은 SNS 마케팅의 필요성은 느끼지만 실행이 어려운 외식업 소상공인을 위해, 사진·영상만으로 브랜드 맞춤 숏폼 콘텐츠를 자동 생성하는 서비스입니다. 신촌 상권의 주요 소비층인 20~30대의 SNS 소비 패턴에 맞춰 효율적인 홍보를 지원합니다.",
     generation: 13,
@@ -178,6 +178,7 @@ export const PROJECTS: Project[] = [
       { name: "윤영준", role: "Frontend" },
       { name: "박준열", role: "Backend" },
     ],
+    awards: ["중앙해커톤 본선 진출"],
     techStack: [],
   },
   {
