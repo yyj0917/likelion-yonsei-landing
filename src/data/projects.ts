@@ -167,8 +167,8 @@ export const PROJECTS: Project[] = [
       "쇼츠테이블은 SNS 마케팅의 필요성은 느끼지만 실행이 어려운 외식업 소상공인을 위해, 사진·영상만으로 브랜드 맞춤 숏폼 콘텐츠를 자동 생성하는 서비스입니다. 신촌 상권의 주요 소비층인 20~30대의 SNS 소비 패턴에 맞춰 효율적인 홍보를 지원합니다.",
     generation: 13,
     githubUrl: {
-      frontend: "",
-      backend: "",
+      frontend: "https://github.com/yyj0917/HT-Front.git",
+      backend: "https://github.com/HT-HugeTeam/ShortsTable-Server.git",
     },
     team: [
       { name: "강문정", role: "Design/PM" },
@@ -178,8 +178,13 @@ export const PROJECTS: Project[] = [
       { name: "윤영준", role: "Frontend" },
       { name: "박준열", role: "Backend" },
     ],
-    awards: ["중앙해커톤 본선 진출"],
-    techStack: [],
+    awards: ["중앙해커톤 247팀 중 상위 12팀 달성"],
+    techStack: [
+      "NestJS",
+      "Spring",
+      "PostgreSQL",
+      "Amazon S3",
+      "OpenAI GPT",],
   },
   {
     id: 6,
