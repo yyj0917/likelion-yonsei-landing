@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     // 링크 썸네일 추가
     images: [
       {
-        url: "/og-image.jpg", // public 폴더에 있는 이미지 파일명
+        url: "/og-image.png", // public 폴더에 있는 이미지 파일명
         width: 1200,
         height: 630,
         alt: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
