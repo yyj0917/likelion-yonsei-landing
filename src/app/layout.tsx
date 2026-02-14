@@ -8,7 +8,7 @@ import { SITE_CONFIG } from "@/constants/site";
  * 모든 메타데이터가 자동으로 업데이트됩니다.
  */
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
+  title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 공식사이트`,
   description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자 모집 중. Frontend, Backend, Design/PM 트랙 지원 가능. 당신의 아이디어를 현실로 만드는 여정을 시작하세요.`,
   keywords: ["멋쟁이사자처럼", "연세대학교", `${SITE_CONFIG.generation}기`, "모집", "아기사자", "프로그래밍", "개발", "창업"],
   authors: [{ name: SITE_CONFIG.name }],
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
+    title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 공식사이트`,
     description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자를 모집합니다. 당신의 아이디어를 현실로 만드는 여정을 지금 시작하세요.`,
     type: "website",
     locale: "ko_KR",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
+    title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 공식사이트`,
     description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자 모집 중`,
   },
   alternates: {

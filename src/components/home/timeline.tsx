@@ -1,9 +1,11 @@
+"use client";
+import Image from "next/image";
 import { CURRICULUM } from "@/data/about";
 
 export default function Timeline() {
   return (
     <section id="curriculum" className="py-24 bg-black overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6"> {/* 가로폭을 조금 더 넓혔습니다 */}
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold text-yonsei-light tracking-widest uppercase mb-3">
             Roadmap
@@ -14,27 +16,26 @@ export default function Timeline() {
         </div>
 
         <div className="relative">
-          {/* ✅ 중앙 수직선: 연세 블루 정체성 유지 */}
+          {/* 중앙 수직선 */}
           <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yonsei-blue via-yonsei-blue/40 to-transparent"></div>
 
-          <div className="space-y-24">
+          <div className="space-y-10"> {/* 사진이 들어가므로 간격을 더 넓혔습니다 */}
             {CURRICULUM.map((item, index) => (
               <div
                 key={index}
-                className="group relative flex flex-col md:flex-row gap-8 items-start md:items-center"
+                className="group relative flex flex-col md:flex-row items-start md:items-center"
               >
-                {/* ✅ Dot 디자인: 
-                   - 배경색은 CURRICULUM 데이터의 dotColor 활용 
-                   - Shadow를 dotColor와 동기화하여 은은하게 빛나는 효과 추가
-                */}
+                {/* 중앙 Dot */}
                 <div 
-                  className={`absolute left-0 md:left-1/2 w-10 h-10 -ml-[20px] rounded-full border-4 border-black z-10 transition-all duration-300 group-hover:scale-125 bg-yonsei-blue shadow-[0_0_15px_rgba(59,123,217,0.4)]`}
+                  className="absolute left-0 md:left-1/2 w-10 h-10 -ml-[20px] rounded-full border-4 border-black z-10 transition-all duration-300 group-hover:scale-125 bg-yonsei-blue shadow-[0_0_15px_rgba(59,123,217,0.4)]"
                 ></div>
 
-                {/* 콘텐츠 블록 */}
+                {/* 텍스트 영역 (index에 따라 왼쪽/오른쪽 교차) */}
                 <div
                   className={`pl-12 md:pl-0 w-full md:w-1/2 ${
-                    index % 2 === 0 ? "md:ml-auto md:pl-16 text-left" : "md:mr-auto md:pr-16 text-left md:text-right"
+                    index % 2 === 0 
+                      ? "md:order-2 md:pl-16 text-left" 
+                      : "md:order-1 md:pr-16 text-left md:text-right"
                   }`}
                 >
                   <div className={`flex items-center gap-3 mb-2 ${index % 2 !== 0 ? "md:justify-end" : "justify-start"}`}>
@@ -52,14 +53,31 @@ export default function Timeline() {
                     {item.title}
                   </h4>
                   
-                  <p className="text-gray-500 leading-relaxed break-keep text-sm md:text-base">
-                    {/* 데이터에 기반한 고정 설명 문구 */}
-                    {item.title === "기초 교육 & 스터디" && "트랙별 기초 문법부터 협업 워크숍까지, 실무 역량을 다집니다."}
-                    {item.title === "아이디어톤" && "전국 멋사 대학생들이 모여 기발한 서비스 기획을 경쟁하는 축제입니다."}
-                    {item.title === "중앙 해커톤" && "무박 2일간 아이디어를 직접 개발하여 MVP를 완성하는 멋사의 꽃입니다."}
-                    {item.title === "자유주제 프로젝트 개발" && "팀별로 자유로운 주제를 선정하여 실제 배포 가능한 서비스를 구축합니다."}
-                    {item.title === "창업 경진 대회" && "1년의 성과를 전문가 앞에서 선보이며 실제 창업 가능성을 검증받습니다."}
+                  <p className="text-gray-500 leading-relaxed break-keep text-sm md:text-base whitespace-pre-wrap">
+                    {item.title === "기초 교육 & 스터디" && "트랙별 기초 개념 학습부터 팀 협업 프로젝트까지,\n서비스 개발에 필요한 기본기를 탄탄히 다집니다. "}
+                    {item.title === "아이디어톤" && "전국 멋쟁이사자처럼 대학생들이 모여\n서비스 아이디어를 기획하고 발전시키는 아이디어 해커톤입니다. "}
+                    {item.title === "중앙 해커톤" && "무박 2일 동안 아이디어를 직접 개발하여\nMVP 수준의 서비스를 완성하는 멋쟁이사자처럼의 대표 행사입니다. "}
+                    {item.title === "신촌톤" && "연세대, 서강대, 이화여대, 홍익대가 연합하여\n무박 2일간 아이디어를 직접 개발하여 MVP를 완성하는 대회입니다. "}
+                    {item.title === "신촌 대학 연합 SW 창업 경진 대회" && "1년 동안 개발한 서비스를 전문가 앞에서 발표하며, 실제 창업 가능성과 서비스 경쟁력을 검증받는 자리입니다.\n연세대학교 SW중심대학사업단의 후원을 통해 우수 팀에게는 시상 및 사업화 지원 혜택이 제공됩니다."}
                   </p>
+                </div>
+
+                {/* ✅ 사진 영역 (텍스트의 맞은편에 배치) */}
+                <div
+                  className={`hidden md:block w-1/2 ${
+                    index % 2 === 0 ? "md:order-1 md:pr-16" : "md:order-2 md:pl-16"
+                  }`}
+                >
+                  <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group-hover:border-yonsei-light/30 transition-colors">
+                    <Image
+                      src={`/images/roadmap/step-${index + 1}.jpg`} // public/images/roadmap/ 폴더에 이미지를 준비하세요
+                      alt={item.title}
+                      fill
+                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    />
+                    {/* 이미지 위 은은한 그라데이션 오버레이 */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </div>
                 </div>
               </div>
             ))}
