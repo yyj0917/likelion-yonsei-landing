@@ -131,8 +131,8 @@ export const CURRICULUM: CurriculumItem[] = [
     lineColor: "from-emerald-400 to-purple-400",
   },
   {
-    phase: "연말",
-    title: "창업 경진 대회",
+    phase: "11월",
+    title: "신촌권 창업 경진 대회",
     tag: "데모데이",
     dotColor: "bg-purple-400",
     lineColor: "",

@@ -23,6 +23,15 @@ export const metadata: Metadata = {
     description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자를 모집합니다. 당신의 아이디어를 현실로 만드는 여정을 지금 시작하세요.`,
     type: "website",
     locale: "ko_KR",
+    // 링크 썸네일 추가
+    images: [
+      {
+        url: "/og-image.jpg", // public 폴더에 있는 이미지 파일명
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
