@@ -201,12 +201,12 @@ export default function ProjectGrid() {
             프로젝트
           </h2>
           <p className="text-gray-400 text-base">
-            멋쟁이 사자처럼 연세대학교의 활동 프로젝트를 소개합니다.
+            멋쟁이사자처럼 연세대학교의 프로젝트를 소개합니다.
           </p>
         </div>
 
         {/* Project Grid - max 3 columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {PROJECTS.map((project) => (
             <ProjectCard
               key={project.id}

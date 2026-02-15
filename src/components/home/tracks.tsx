@@ -21,9 +21,9 @@ export default function Tracks() {
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
             14기 모집 트랙
           </h3>
-          <p className="text-gray-400 text-lg max-w-2xl leading-relaxed break-keep">
-            연세대학교 멋쟁이사자처럼 14기에서는 세 가지 전문 트랙을 모집합니다. <br/>
-            각 트랙별로 실무 중심의 커리큘럼을 통해 메이커로서의 성장을 지원합니다.
+          <p className="text-gray-400 text-lg max-w-3xl leading-relaxed break-keep">
+          연세대학교 멋쟁이사자처럼 14기는 세 가지 전문 트랙을 통해 각자의 가능성을 확장합니다. <br/>
+          실무 중심 커리큘럼과 팀 프로젝트를 바탕으로, 아이디어를 현실로 구현하는 메이커로 성장합니다.
           </p>
         </div>
 
@@ -53,8 +53,7 @@ export default function Tracks() {
 
                 {/* 학습 하이라이트 (Highlights) */}
                 <div className="space-y-3 mb-10">
-                  <p className="text-xs font-bold text-white/50 uppercase tracking-widest mb-4">
-                    What you'll learn
+                  <p className="text-xs font-bold text-white/50 tracking-widest mb-4">
                   </p>
                   {track.highlights.map((item, index) => (
                     <div key={index} className="flex items-start gap-3">

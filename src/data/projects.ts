@@ -109,7 +109,7 @@ export const PROJECTS: Project[] = [
       { name: "이동진", role: "Backend" },
       { name: "표영규", role: "Backend" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["React", "Django"],
   },
   {
@@ -132,6 +132,7 @@ export const PROJECTS: Project[] = [
       { name: "우태호", role: "Backend" },
       { name: "이수정", role: "Backend" },
     ],
+    awards: [""],
     techStack: ["React", "Django"],
   },
   {
@@ -228,6 +229,7 @@ export const PROJECTS: Project[] = [
       { name: "고선태", role: "Backend" },
       { name: "표영규", role: "Backend" },
     ],
+    awards: [""],
     techStack: ["Next.js", "Supabase", "Tailwind CSS"],
   },
   {
@@ -274,7 +276,7 @@ export const PROJECTS: Project[] = [
       { name: "손혁제", role: "Frontend" },
       { name: "이석원", role: "Backend" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["React", "Spring Boot", "Figma"],
   },
   {
@@ -292,7 +294,7 @@ export const PROJECTS: Project[] = [
     deployUrl: "",
     team: [
     ],
-    awards: [],
+    awards: [""],
     techStack: ["OCR", "NLP", "Blockchain", "Data Analytics"],
   },
   {
@@ -310,7 +312,7 @@ export const PROJECTS: Project[] = [
     deployUrl: "",
     team: [
     ],
-    awards: [],
+    awards: [""],
     techStack: ["GPS", "IoT Sensor", "Mobile App", "Wireless Charging"],
   },
   {
@@ -332,7 +334,7 @@ export const PROJECTS: Project[] = [
       { name: "최소영", role: "Frontend" },
       { name: "박준형", role: "Frontend" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["React", "Spring Boot", "AI 추천 엔진"],
   },
   {
@@ -351,7 +353,7 @@ export const PROJECTS: Project[] = [
     team: [
       { name: "푸드바오", role: "Design/PM/Dev" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["Django", "Python", "React", "JavaScript", "HTML/CSS"],
   },
   {
@@ -374,7 +376,7 @@ export const PROJECTS: Project[] = [
       { name: "신예찬", role: "Backend" },
       { name: "정승연", role: "Backend" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["Django", "Python", "HTML5", "CSS3", "JavaScript"],
   },
   {
@@ -398,7 +400,7 @@ export const PROJECTS: Project[] = [
       { name: "이석원", role: "Backend" },
       { name: "정세진", role: "Backend" },
     ],
-    awards: [],
+    awards: [""],
     techStack: ["React", "Django REST framework", "Redux", "AWS", "Node.js"],
   },
 ];

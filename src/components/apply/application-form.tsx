@@ -110,7 +110,7 @@ export function ApplicationForm() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-400 text-sm">{track.description}</p>
+                <p className="text-gray-400 text-sm leading-relaxed tracking-normal">{track.description}</p>
               </CardContent>
             </Card>
           ))}

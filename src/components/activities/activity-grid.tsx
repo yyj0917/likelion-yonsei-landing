@@ -123,7 +123,7 @@ function ActivityCard({
         </div>
 
         <div>
-          <p className="text-gray-400 text-sm leading-relaxed mt-2 line-clamp-3">
+          <p className="text-gray-400 text-sm leading-relaxed mt-2 line-clamp-3 whitespace-pre-line">
             {description}
           </p>
           <div className="mt-2 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -176,7 +176,7 @@ function ActivityDetailDialog({
               </span>
             </div>
           </div>
-          <DialogDescription className="text-gray-400 text-sm leading-relaxed pt-2">
+          <DialogDescription className="text-gray-400 text-sm leading-relaxed pt-2 whitespace-pre-line">
             {activity.description}
           </DialogDescription>
         </DialogHeader>
@@ -277,8 +277,7 @@ export default function ActivityGrid() {
               활동
             </h2>
             <p className="text-gray-400 text-base max-w-2xl mx-auto">
-              멋쟁이 사자처럼에서는 IT 창업과 관련된 다양한 활동을 진행하고
-              있습니다.
+              멋쟁이사자처럼에서는 IT 창업과 관련된 다양한 활동을 진행하고 있습니다.
             </p>
           </div>
 
