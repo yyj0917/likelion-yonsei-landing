@@ -196,8 +196,8 @@ export const PROJECTS: Project[] = [
       "돌봄온은 가족 간 간병 일정 조율과 기록 인수인계를 한 번에 해결하는 가족 간병 지원 서비스입니다. 공유 캘린더와 간편 로그·그래프 기능을 통해 돌봄 공백과 기록 누락을 줄이고, 가족 모두가 같은 정보를 보도록 돕습니다.",
     generation: 13,
     githubUrl: {
-      frontend: "",
-      backend: "",
+      frontend: "https://github.com/STRONG-OE-200/CAREON-FRONTEND.git",
+      backend: "https://github.com/STRONG-OE-200/CAREON-BACKEND.git",
     },
     deployUrl: "",
     team: [
