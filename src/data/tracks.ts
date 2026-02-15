@@ -117,12 +117,12 @@ export const TRACK_DETAILS: TrackDetail[] = [
     title: "기획 / 디자인",
     subtitle: "Design & Planning",
     description:
-      "자신만의 아이템을 구체화하고, 사용자 중심의 디자인으로 완성합니다. 서비스 기획부터 UI/UX 디자인까지, 아이디어가 제품이 되는 전 과정을 경험합니다.",
+      "아이디어를 구조화하고, 사용자 경험을 설계합니다. 단순한 화면 디자인을 넘어, 문제 정의부터 서비스 전략 수립까지 제품을 만들어가는 전 과정을 경험합니다.",
     highlights: [
-      "자신의 아이디어를 서비스로 디벨롭",
-      "UI/UX 디자인 및 프로토타이핑",
-      "사용자 리서치 및 시장 분석",
-      "애자일 방법론 기반 프로젝트 관리",
+      "아이디어 발굴부터 서비스 구조 설계",
+      "UI/UX 디자인 및 인터랙션 설계",
+      "사용자 리서치 및 시장 검증",
+      "애자일 기반 프로젝트 리딩",
     ],
     techStack: [
       { name: "Figma", color: "bg-violet-500/15 text-violet-300 border-violet-500/20" },
@@ -140,12 +140,12 @@ export const TRACK_DETAILS: TrackDetail[] = [
     title: "프론트엔드",
     subtitle: "Frontend Development",
     description:
-      "HTML/CSS/JS 기초부터 React, Next.js까지 모던 웹 기술을 학습하며, 자신의 아이디어를 직접 프론트엔드로 구현합니다. 사용자가 직접 만나는 인터페이스를 만듭니다.",
+      "사용자가 직접 마주하는 경험을 설계하고 구현합니다. 기초부터 React, Next.js까지 모던 웹 스택을 기반으로 실제 프로덕트를 완성합니다.",
     highlights: [
-      "HTML / CSS / JavaScript 기초 학습",
-      "React와 Next.js로 모던 웹 개발",
-      "자신의 아이디어를 프론트엔드로 구현",
-      "반응형 웹 디자인 및 성능 최적화",
+      "모던 웹 스택 기반 UI 구현",
+      "React & Next.js 프로젝트 실습",
+      "반응형 웹 및 UX 최적화",
+      "팀 협업 기반 실전 서비스 개발",
     ],
     techStack: [
       { name: "HTML/CSS", color: "bg-blue-500/10 text-blue-300 border-blue-500/20" },
@@ -163,12 +163,12 @@ export const TRACK_DETAILS: TrackDetail[] = [
     title: "백엔드",
     subtitle: "Backend Development",
     description:
-      "14기부터 Django가 아닌 Spring Boot로 전환! 개발부터 배포, CI/CD까지 백엔드 전반에 걸쳐 깊이 있게 학습하고 실전 프로젝트를 진행합니다.",
+      "Spring Boot 기반의 견고한 서버 아키텍처를 설계하고 구축합니다. API 설계부터 배포, 운영까지 실제 서비스의 뼈대를 책임지는 백엔드를 경험합니다.",
     highlights: [
       "Spring Boot 기반 서버 개발",
-      "RESTful API 설계 및 구현",
-      "AWS 배포 및 CI/CD 파이프라인 구축",
-      "DB 설계부터 운영까지 백엔드 전반 학습",
+      "RESTful API 설계 및 아키텍처 구성",
+      "AWS 배포 및 CI/CD 자동화",
+      "DB 설계와 성능 최적화",
     ],
     techStack: [
       { name: "Spring Boot", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
@@ -188,18 +188,18 @@ export const TRACK_DETAILS: TrackDetail[] = [
 
 export const APPLY_TRACKS: ApplyTrack[] = [
   {
+    name: "Design-PM",
+    description: "문제를 정의하고 해결 방식을 설계합니다. UX부터 팀 운영까지, 프로젝트의 방향을 만듭니다.",
+    icon: "🎨",
+  },
+  {
     name: "Frontend",
-    description: "웹 프론트엔드 개발을 배우고 실습합니다.",
+    description: "아이디어를 화면 위에 구현합니다. React를 기반으로 실제 서비스 UI를 설계하고 개발합니다.",
     icon: "🖥️",
   },
   {
     name: "Backend",
-    description: "서버 및 백엔드 개발을 배우고 실습합니다.",
+    description: "눈에 보이지 않는 영역을 설계합니다. API부터 서버 구조까지, 서비스의 뼈대를 만듭니다.",
     icon: "⚙️",
-  },
-  {
-    name: "Design-PM",
-    description: "UI/UX 디자인과 프로젝트 매니징을 경험합니다.",
-    icon: "🎨",
   },
 ];

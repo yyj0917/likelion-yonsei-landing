@@ -54,11 +54,29 @@ export default function Timeline() {
                   </h4>
                   
                   <p className="text-gray-500 leading-relaxed break-keep text-sm md:text-base whitespace-pre-wrap">
-                    {item.title === "기초 교육 & 스터디" && "트랙별 기초 개념 학습부터 팀 협업 프로젝트까지,\n서비스 개발에 필요한 기본기를 탄탄히 다집니다. "}
-                    {item.title === "아이디어톤" && "전국 멋쟁이사자처럼 대학생들이 모여\n서비스 아이디어를 기획하고 발전시키는 아이디어 해커톤입니다. "}
-                    {item.title === "중앙 해커톤" && "무박 2일 동안 아이디어를 직접 개발하여\nMVP 수준의 서비스를 완성하는 멋쟁이사자처럼의 대표 행사입니다. "}
-                    {item.title === "신촌톤" && "연세대, 서강대, 이화여대, 홍익대가 연합하여\n무박 2일간 아이디어를 직접 개발하여 MVP를 완성하는 대회입니다. "}
-                    {item.title === "신촌 대학 연합 SW 창업 경진 대회" && "1년 동안 개발한 서비스를 전문가 앞에서 발표하며, 실제 창업 가능성과 서비스 경쟁력을 검증받는 자리입니다.\n연세대학교 SW중심대학사업단의 후원을 통해 우수 팀에게는 시상 및 사업화 지원 혜택이 제공됩니다."}
+                    {item.title === "기초 교육 & 스터디" && "트랙별 기초 개념을 탄탄히 다지고,\n팀 프로젝트를 통해 실제 서비스 개발 역량을 체계적으로 쌓아갑니다."}
+                    {item.title === "아이디어톤" && "전국 멋쟁이사자처럼 대학생들과 함께\n서비스 아이디어를 기획하고 발전시키는 아이디어 집중 프로그램입니다. "}
+                    {item.title === "중앙 해커톤" && (
+                      <>
+                        전국 81개 대학, 2,500명 이상이 참여하는
+                        {"\n"}
+                        멋쟁이사자처럼의 대표 연합 해커톤입니다.
+                        {"\n"}
+                        <a
+                          href="https://youtu.be/NOQfZti_HlQ"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-2 mt-3 text-sm font-medium text-white"
+                        >
+                          🎬 중앙 해커톤 현장 영상 보기
+                          <span className="group-hover:translate-x-1 transition-transform">
+                           →
+                          </span>
+                        </a>
+                      </>
+                    )}
+                    {item.title === "신촌톤" && "연세대·서강대·이화여대·홍익대가 연합하여\n아이디어를 실제 MVP로 구현하는 캠퍼스 연합 해커톤입니다. "}
+                    {item.title === "신촌 대학 연합 SW 창업 경진 대회" && "1년간 개발한 서비스를 전문가 앞에서 발표하며, 창업 가능성과 시장 경쟁력을 검증받는 자리입니다. 연세대학교 SW중심대학사업단의 지원 아래 진행됩니다."}
                   </p>
                 </div>
 
