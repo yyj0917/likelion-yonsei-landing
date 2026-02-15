@@ -64,14 +64,14 @@ export default function Footer() {
               {/* Track 1 */}
               <div>
                 <p className="text-white font-semibold mb-3">기획 & 디자인</p>
-                <div className="space-y-2 text-gray-400 text-sm">
-                  <div className="flex justify-between">
-                    <span>이윤서</span>
-                    <span className="text-gray-500">파트장</span>
+                <div className="space-y-2 text-gray-400 text-sm text-center">
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">이윤서</span>
+                    <span className="text-gray-500 ml-3">파트장</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>오은성</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">오은성</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
                 </div>
               </div>
@@ -79,26 +79,26 @@ export default function Footer() {
               {/* Track 2 */}
               <div>
                 <p className="text-white font-semibold mb-3">프론트엔드</p>
-                <div className="space-y-2 text-gray-400 text-sm">
-                  <div className="flex justify-between">
-                    <span>임기주</span>
-                    <span className="text-gray-500">파트장</span>
+                <div className="space-y-2 text-gray-400 text-sm text-center md:text-left">
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">임기주</span>
+                    <span className="text-gray-500 ml-3">파트장</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>권동욱</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">권동욱</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>박준열</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">박준열</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>윤영준</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">윤영준</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>조민</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">조민</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
                 </div>
               </div>
@@ -106,27 +106,30 @@ export default function Footer() {
               {/* Track 3 */}
               <div>
                 <p className="text-white font-semibold mb-3">백엔드</p>
-                <div className="space-y-2 text-gray-400 text-sm">
-                  <div className="flex justify-between">
-                    <span>우태호</span>
-                    <span className="text-gray-500">대표</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>고선태</span>
-                    <span className="text-gray-500">파트장</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>백세빈</span>
-                    <span className="text-gray-500">운영진</span>
+
+                {/* 모바일: 가운데 정렬 + 직책 칼럼 정렬, 데스크탑: 왼쪽 정렬 유지 */}
+                <div className="space-y-2 text-gray-400 text-sm text-center md:text-left">
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">우태호</span>
+                    <span className="text-gray-500 ml-6">대표</span>
                   </div>
 
-                  <div className="flex justify-between">
-                    <span>이수정</span>
-                    <span className="text-gray-500">운영진</span>
+                  <div className="md:justify-start">
+                    <span className="inline-block w-16 text-left">고선태</span>
+                    <span className="text-gray-500 ml-3">파트장</span>
+                  </div>
+
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">백세빈</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
+                  </div>
+
+                  <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">이수정</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
