@@ -29,7 +29,12 @@ export default function FAQ() {
           {FAQ_DATA.map((item, index) => (
             <div
               key={index}
-              className="bg-black/50 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-yonsei-light/30"
+              className={`rounded-xl overflow-hidden transition-all duration-300 border
+                ${
+                  openIndex === index
+                    ? "bg-black/80 border-yonsei-light shadow-[0_0_25px_rgba(59,130,246,0.15)]"
+                    : "bg-black/50 border-white/10 hover:border-yonsei-light/30"
+                }`}
             >
               <button
                 className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none"

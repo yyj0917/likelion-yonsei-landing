@@ -91,7 +91,7 @@ export default function Timeline() {
                       src={`/images/roadmap/step-${index + 1}.jpg`} // public/images/roadmap/ 폴더에 이미지를 준비하세요
                       alt={item.title}
                       fill
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                      className="object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-500"
                     />
                     {/* 이미지 위 은은한 그라데이션 오버레이 */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
