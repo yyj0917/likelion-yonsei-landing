@@ -45,22 +45,20 @@ export default function About() {
               </div>
 
               {/* RIGHT STATS BLOCK */}
-              <div className="flex lg:justify-end">
-                <div className="grid grid-cols-3 gap-12">
-                  {STATS.map((stat) => (
-                    <div key={stat.label}>
-                      <div className="text-5xl font-black text-white">
-                        {stat.number}
-                        <span className="text-yonsei-light text-xl ml-1">
-                          {stat.suffix}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-500 mt-1">
-                        {stat.label}
-                      </div>
+              <div className="flex gap-8 justify-end">
+                {STATS.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-5xl font-black text-white tabular-nums">
+                      {stat.number}
+                      <span className="text-yonsei-light text-xl ml-1">
+                        {stat.suffix}
+                      </span>
                     </div>
-                  ))}
-                </div>
+                    <div className="text-sm text-gray-500 mt-1">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
