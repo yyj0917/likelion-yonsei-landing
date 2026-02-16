@@ -102,6 +102,7 @@ export interface ActivityData {
   iconName: string;
   /** 아이콘/텍스트 색상 클래스 (예: "text-cyan-400") */
   color: string;
+  dotColor: string;
   /** 카드 배경색 클래스 */
   bgColor: string;
   /** 카드 테두리 색상 클래스 */
@@ -128,6 +129,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "presentation",
     color: "text-cyan-400",
+    dotColor: "bg-cyan-400",
     bgColor: "bg-cyan-500/10",
     borderColor: "border-cyan-500/30",
     textColor: "text-cyan-300",
@@ -147,6 +149,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "code-2",
     color: "text-red-400",
+    dotColor: "bg-red-400",
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/30",
     textColor: "text-red-300",
@@ -166,6 +169,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "pencil",
     color: "text-emerald-400",
+    dotColor: "bg-emerald-400",
     bgColor: "bg-emerald-500/10",
     borderColor: "border-emerald-500/30",
     textColor: "text-emerald-300",
@@ -186,6 +190,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "users",
     color: "text-amber-400",
+    dotColor: "bg-amber-400",
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/30",
     textColor: "text-amber-300",
@@ -205,6 +210,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "sparkles",
     color: "text-pink-400",
+    dotColor: "bg-pink-400",
     bgColor: "bg-pink-500/10",
     borderColor: "border-pink-500/30",
     textColor: "text-pink-300",
@@ -224,6 +230,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "mountain",
     color: "text-green-400",
+    dotColor: "bg-green-400",
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/30",
     textColor: "text-green-300",
@@ -243,6 +250,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "lightbulb",
     color: "text-purple-400",
+    dotColor: "bg-purple-400",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/30",
     textColor: "text-purple-300",
@@ -262,6 +270,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "trophy",
     color: "text-yellow-400",
+    dotColor: "bg-yellow-400",
     bgColor: "bg-yellow-500/10",
     borderColor: "border-yellow-500/30",
     textColor: "text-yellow-300",
@@ -281,6 +290,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "megaphone",
     color: "text-blue-400",
+    dotColor: "bg-blue-400",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/30",
     textColor: "text-blue-300",
@@ -300,6 +310,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     ],
     iconName: "book-open",
     color: "text-orange-400",
+    dotColor: "bg-orange-400",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/30",
     textColor: "text-orange-300",

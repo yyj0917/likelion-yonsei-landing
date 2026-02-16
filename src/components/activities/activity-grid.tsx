@@ -185,19 +185,22 @@ function ActivityDetailDialog({
           <h4 className={`text-sm font-semibold ${activity.textColor}`}>
             주요 활동 내용
           </h4>
-          <ul className="space-y-2.5">
-            {activity.details.map((detail, idx) => (
-              <li
-                key={idx}
-                className="flex items-start gap-3 text-sm text-gray-300"
-              >
-                <span
-                  className={`mt-1.5 w-1.5 h-1.5 rounded-full ${activity.color.replace("text-", "bg-")} shrink-0`}
-                />
-                {detail}
-              </li>
-            ))}
-          </ul>
+            <ul className="space-y-2.5">
+              {activity.details.map((detail, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-center gap-3 text-sm text-gray-300"
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${activity.dotColor.replace(
+                      "text-",
+                      "bg-"
+                    )} shrink-0`}
+                  />
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
         </div>
 
         {activity.href && (
@@ -214,7 +217,7 @@ function ActivityDetailDialog({
 
         <div className="mt-2 pt-4 border-t border-white/5 flex items-center gap-2">
           <div
-            className={`w-2 h-2 rounded-full ${activity.color.replace("text-", "bg-")}`}
+            className={`${activity.color.replace("text-", "bg-")}`}
           />
           <span className="text-xs text-gray-500">
             {SITE_CONFIG.name} {SITE_CONFIG.generation}기
