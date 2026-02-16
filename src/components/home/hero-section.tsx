@@ -17,87 +17,192 @@ export default function Hero() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
+  
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
+  
     let animationFrameId: number;
-    // Particle system variables
-    let stars: { x: number; y: number; radius: number; vx: number; vy: number; alpha: number; targetAlpha: number }[] = [];
-
+    let stars: any[] = [];
+    let scrollProgress = 0;
+  
+    const STAR_COUNT = 2500;
+  
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initStars();
     };
-
+  
     const initStars = () => {
       stars = [];
-      // Adjust density of stars
-      const numStars = Math.floor((canvas.width * canvas.height) / 3000);
-      
-      for (let i = 0; i < numStars; i++) {
+  
+      for (let i = 0; i < STAR_COUNT; i++) {
+        // 🌌 구형 분포 (중앙 몰림 제거)
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        const radius = 600 + Math.random() * 600;
+  
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.sin(phi) * Math.sin(theta);
+        const z = radius * Math.cos(phi);
+  
         stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 0.5,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
-          alpha: Math.random(),
-          targetAlpha: Math.random()
+          x,
+          y,
+          z,
+          size: Math.random() * 1.2 + 0.4,
+          vx: (Math.random() - 0.5) * 0.02,
+          vy: (Math.random() - 0.5) * 0.02,
+          vz: (Math.random() - 0.5) * 0.02,
+          twinklePhase: Math.random() * Math.PI * 2,
+          connections: 0,
         });
       }
     };
-
+  
     const draw = () => {
-      if (!ctx || !canvas) return;
-      
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // 1. Draw Background Gradient (Deep Space to Yonsei Blue glow at bottom)
+  
+      // 배경
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, '#020205');     // Almost black
-      gradient.addColorStop(0.6, '#050A14');   // Deep dark blue
-      gradient.addColorStop(1, '#001E40');     // Yonsei Dark Blue at bottom
-      
+      gradient.addColorStop(0, "#020205");
+      gradient.addColorStop(1, "#001E40");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // 2. Draw Stars
+  
+      const rotationY = scrollProgress * 0.5;
+  
+      const projected: any[] = [];
+  
+      // ⭐ 3D 투영
       stars.forEach((star) => {
-        // Update twinkling
-        if (Math.abs(star.alpha - star.targetAlpha) < 0.01) {
-          star.targetAlpha = Math.random();
-        } else {
-          star.alpha += (star.targetAlpha - star.alpha) * 0.02;
-        }
+        const cosY = Math.cos(rotationY);
+        const sinY = Math.sin(rotationY);
+  
+        const x = star.x * cosY - star.z * sinY;
+        const z = star.x * sinY + star.z * cosY;
+  
+        const perspective = 900 / (900 + z);
+  
+        const screenX = x * perspective + canvas.width / 2;
+        const screenY = star.y * perspective + canvas.height / 2;
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Update position
+        // 🌌 subtle drift
         star.x += star.vx;
         star.y += star.vy;
+        star.z += star.vz;
 
-        // Wrap around screen
-        if (star.x < 0) star.x = canvas.width;
-        if (star.x > canvas.width) star.x = 0;
-        if (star.y < 0) star.y = canvas.height;
-        if (star.y > canvas.height) star.y = 0;
+        // 공간 경계 유지
+        const maxRadius = 1200;
+        const dist = Math.sqrt(star.x**2 + star.y**2 + star.z**2);
+        if (dist > maxRadius) {
+          star.x *= 0.95;
+          star.y *= 0.95;
+          star.z *= 0.95;
+        }
+  
+        projected.push({
+          screenX,
+          screenY,
+          z,
+          perspective,
+          size: star.size * perspective,
+          connections: 0,
+        });
+  
+        const depth = 900 + z;
+        if (depth <= 50) return;
+        
+        const radius = Math.max(0.1, star.size * perspective);
+        if (!isFinite(radius)) return;
+        
+        ctx.fillStyle = `rgba(255,255,255,${Math.max(
+          0.08,
+          perspective * 0.9
+        )})`;
+        
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
+        ctx.fill();
       });
-
+  
+      // ⭐ 엄격한 연결선
+      const MAX_DISTANCE = 100;
+      const MAX_DEPTH_DIFF = 120;
+  
+      for (let i = 0; i < projected.length; i++) {
+        if (projected[i].connections >= 2) continue;
+  
+        for (let j = i + 1; j < projected.length; j++) {
+          if (projected[j].connections >= 2) continue;
+  
+          const dx = projected[i].screenX - projected[j].screenX;
+          const dy = projected[i].screenY - projected[j].screenY;
+  
+          if (Math.abs(dx) > MAX_DISTANCE) continue;
+          if (Math.abs(dy) > MAX_DISTANCE) continue;
+  
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const depthDiff = Math.abs(projected[i].z - projected[j].z);
+  
+          if (dist < MAX_DISTANCE && depthDiff < MAX_DEPTH_DIFF) {
+            const alpha = 0.18 * (1 - dist / MAX_DISTANCE);
+  
+            ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(projected[i].screenX, projected[i].screenY);
+            ctx.lineTo(projected[j].screenX, projected[j].screenY);
+            ctx.stroke();
+  
+            projected[i].connections++;
+            projected[j].connections++;
+  
+            if (projected[i].connections >= 2) break;
+          }
+        }
+      }
+  
       animationFrameId = requestAnimationFrame(draw);
     };
-
-    window.addEventListener('resize', resizeCanvas);
+  
+    // 스크롤 제어
+    let progress = 0;
+    let locked = true;
+  
+    document.body.style.overflow = "hidden";
+  
+    const handleWheel = (e: WheelEvent) => {
+      if (!locked) return;
+      e.preventDefault();
+  
+      progress += e.deltaY * 0.0006;
+      progress = Math.max(0, Math.min(1, progress));
+  
+      scrollProgress = progress;
+  
+      if (progress >= 1) {
+        locked = false;
+        document.body.style.overflow = "auto";
+  
+        setTimeout(() => {
+          window.scrollTo({
+            top: window.innerHeight,
+            behavior: "smooth",
+          });
+        }, 200);
+      }
+    };
+  
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("resize", resizeCanvas);
+  
     resizeCanvas();
     draw();
-
+  
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

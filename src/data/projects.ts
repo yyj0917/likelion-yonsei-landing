@@ -219,8 +219,8 @@ export const PROJECTS: Project[] = [
       "여행자 취향 기반으로 로컬(Local)이 직접 여행 일정을 맞춤 제작해주는 여행 매칭 플랫폼입니다.",
     generation: 13,
     githubUrl: {
-      frontend: "",
-      backend: "",
+      frontend: "https://github.com/Likelion-Yonsei-13th/13-DEMODAY-FRONTEND-TEAM02.git",
+      backend: "https://github.com/Likelion-Yonsei-13th/13-DEMODAY-BACKEND-TEAM02.git",
     },
     team: [
       { name: "강서현", role: "Design/PM" },
