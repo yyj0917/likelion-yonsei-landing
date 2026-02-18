@@ -140,7 +140,7 @@ export default function Hero() {
         const t = performance.now() * 0.002;
 
         // 멀리 있을수록 트윙클 강해짐
-        const depthFactor = 1 - perspective;
+        const depthFactor = perspective;
         const twinkleBoost = 0.85 + Math.sin(t + star.twinklePhase) * 0.15 * depthFactor;
 
         const alpha = Math.max(0.08, perspective * 0.9) * twinkleBoost;
