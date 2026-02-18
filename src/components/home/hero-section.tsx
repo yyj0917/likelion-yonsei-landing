@@ -63,7 +63,6 @@ export default function Hero() {
           vz: (Math.random() - 0.5) * 0.04,
           type,
           hasDiffraction: Math.random() < 0.1,
-          hasTwinkle: Math.random() < 0.2,
           twinklePhase: Math.random() * Math.PI * 2,
           flareAngle: Math.random() * Math.PI * 2,
         });
@@ -138,11 +137,11 @@ export default function Hero() {
         if (!isFinite(radius)) return;
 
         // ✨ Twinkle
-        let twinkleBoost = 1;
-        if (star.hasTwinkle) {
-          const t = performance.now() * 0.002;
-          twinkleBoost = 0.75 + Math.sin(t + star.twinklePhase) * 0.25;
-        }
+        const t = performance.now() * 0.002;
+
+        // 멀리 있을수록 트윙클 강해짐
+        const depthFactor = 1 - perspective;
+        const twinkleBoost = 0.85 + Math.sin(t + star.twinklePhase) * 0.15 * depthFactor;
 
         const alpha = Math.max(0.08, perspective * 0.9) * twinkleBoost;
 
