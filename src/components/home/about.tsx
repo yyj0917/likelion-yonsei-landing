@@ -39,8 +39,12 @@ export default function About() {
               {/* LEFT TEXT BLOCK */}
               <div>
                 <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                  가능성을 <span className="text-yonsei-light">현실로</span>,<br />
-                  우리는 함께 성장합니다.
+                <span>
+                    가능성을 <span className="text-yonsei-light">현실로</span>,
+                  </span>
+                  <span className="block mt-3">
+                    우리는 함께 성장합니다.
+                  </span>
                 </h3>
               </div>
 
