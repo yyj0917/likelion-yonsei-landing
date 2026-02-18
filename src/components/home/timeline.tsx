@@ -17,7 +17,7 @@ export default function Timeline() {
 
         <div className="relative">
           {/* 중앙 수직선 */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yonsei-blue via-yonsei-blue/40 to-transparent"></div>
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yonsei-light via-yonsei-light/40 to-transparent"></div>
 
           <div className="space-y-10"> {/* 사진이 들어가므로 간격을 더 넓혔습니다 */}
             {CURRICULUM.map((item, index) => (
@@ -27,7 +27,7 @@ export default function Timeline() {
               >
                 {/* 중앙 Dot */}
               <div
-                className="absolute left-6 md:left-1/2 top-6 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 w-10 h-10 rounded-full border-4 border-black z-10 transition-all duration-300 group-hover:scale-125 bg-yonsei-blue shadow-[0_0_15px_rgba(59,123,217,0.4)]"
+                className="absolute left-6 md:left-1/2 top-6 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 w-10 h-10 rounded-full border-4 border-black z-10 transition-all duration-300 group-hover:scale-125 bg-yonsei-light shadow-[0_0_15px_rgba(59,123,217,0.4)]"
               ></div>
 
                 {/* 텍스트 영역 (index에 따라 왼쪽/오른쪽 교차) */}
