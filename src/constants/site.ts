@@ -26,7 +26,7 @@ export const SITE_CONFIG = {
   /** 배포 URL (canonical, OG, structured data 등) */
   url: "https://likelion-yonsei.vercel.app",
   /** 한 줄 태그라인 */
-  tagline: "내 아이디어를 내 손으로 실현하다.",
+  tagline: "𝙋𝙊𝙎𝙎𝙄𝘽𝙄𝙇𝙄𝙏𝙔 𝙏𝙊 𝙍𝙀𝘼𝙇𝙄𝙏𝙔",
   /** 조직 소개 문구 (SEO description, structured data 등) */
   description:
     "연세대학교 멋쟁이사자처럼은 기술을 통해 세상을 변화시키고자 하는 열정적인 학생들이 모여 서로 배우고, 나누며, 함께 성장하는 커뮤니티입니다.",
