@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SITE_CONFIG } from "@/constants/site";
+import Navbar from "@/components/home/navbar";
 
 /**
  * 사이트 메타데이터 — SITE_CONFIG에서 동적으로 생성
@@ -10,7 +11,16 @@ import { SITE_CONFIG } from "@/constants/site";
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 공식사이트`,
   description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자 모집 중. Frontend, Backend, Design/PM 트랙 지원 가능. 당신의 아이디어를 현실로 만드는 여정을 시작하세요.`,
-  keywords: ["멋쟁이사자처럼", "연세대학교", `${SITE_CONFIG.generation}기`, "모집", "아기사자", "프로그래밍", "개발", "창업"],
+  keywords: [
+    "멋쟁이사자처럼",
+    "연세대학교",
+    `${SITE_CONFIG.generation}기`,
+    "모집",
+    "아기사자",
+    "프로그래밍",
+    "개발",
+    "창업",
+  ],
   authors: [{ name: SITE_CONFIG.name }],
   creator: SITE_CONFIG.name,
   publisher: SITE_CONFIG.name,
@@ -54,10 +64,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className="antialiased"
-      > 
-        {children}
+      <body className="antialiased">
+        <main className="bg-black min-h-screen text-white selection:bg-likelion-orange selection:text-white">
+          <Navbar />
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -5,7 +5,10 @@ import Image from "next/image"; // Image 컴포넌트 추가
 import { Github, ExternalLink, Trophy, Users } from "lucide-react";
 import {
   Dialog,
-  DialogContent
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { PROJECTS, type Project } from "@/data/projects";
 
@@ -22,7 +25,9 @@ function ProjectCard({
       className="group relative aspect-video rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 bg-zinc-900 border border-white/5 hover:border-white/20"
     >
       {/* ✅ Thumbnail Image (Priority) */}
-      <div className={`absolute inset-0 bg-gradient-to-br transition-transform duration-700 group-hover:scale-110`}>
+      <div
+        className={`absolute inset-0 bg-gradient-to-br transition-transform duration-700 group-hover:scale-110`}
+      >
         {project.thumbnail && (
           <Image
             src={project.thumbnail}
@@ -33,11 +38,11 @@ function ProjectCard({
         )}
         {/* 썸네일이 없을 때나 로딩 중에 보일 프로젝트 이름 */}
         {!project.thumbnail && (
-           <div className="flex items-center justify-center h-full">
-             <span className="text-white/20 text-4xl font-bold tracking-tighter uppercase italic">
-               {project.name}
-             </span>
-           </div>
+          <div className="flex items-center justify-center h-full">
+            <span className="text-white/20 text-4xl font-bold tracking-tighter uppercase italic">
+              {project.name}
+            </span>
+          </div>
         )}
       </div>
 
@@ -47,9 +52,7 @@ function ProjectCard({
           <span className="inline-block px-2 py-0.5 bg-yonsei-blue text-white text-[10px] font-bold rounded-md mb-3 uppercase">
             {project.generation}기 활동작
           </span>
-          <h3 className="text-white text-2xl font-bold mb-2">
-            {project.name}
-          </h3>
+          <h3 className="text-white text-2xl font-bold mb-2">{project.name}</h3>
           <p className="text-gray-300 text-sm line-clamp-2 break-keep">
             {project.description}
           </p>
@@ -73,6 +76,10 @@ function ProjectDetailDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-zinc-950 border-white/10 text-white sm:max-w-2xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+        <DialogHeader className="hidden">
+          <DialogTitle hidden></DialogTitle>
+          <DialogDescription hidden></DialogDescription>
+        </DialogHeader>
         {/* Header Section with Image */}
         <div className="relative h-64 w-full">
           <div className={`absolute inset-0 bg-gradient-to-br opacity-50`} />
@@ -117,12 +124,19 @@ function ProjectDetailDialog({
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <Users size={18} className="text-yonsei-light" />
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Build Team</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">
+                  Build Team
+                </h4>
               </div>
               <div className="space-y-2">
                 {project.team.map((member) => (
-                  <div key={member.name} className="flex items-center justify-between text-sm">
-                    <span className="text-gray-200 font-medium">{member.name}</span>
+                  <div
+                    key={member.name}
+                    className="flex items-center justify-between text-sm"
+                  >
+                    <span className="text-gray-200 font-medium">
+                      {member.name}
+                    </span>
                     <span className="text-gray-500 text-xs">{member.role}</span>
                   </div>
                 ))}
@@ -135,36 +149,53 @@ function ProjectDetailDialog({
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Trophy size={18} className="text-yellow-500" />
-                    <h4 className="text-sm font-bold text-white uppercase tracking-widest">Awards</h4>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-widest">
+                      Awards
+                    </h4>
                   </div>
                   {project.awards.map((award) => (
-                    <div key={award} className="text-sm text-yellow-500/90 font-medium italic">
+                    <div
+                      key={award}
+                      className="text-sm text-yellow-500/90 font-medium italic"
+                    >
                       {award}
                     </div>
                   ))}
                 </div>
               )}
 
-            {/* ✅ GitHub FE/BE 분리 및 배포 링크 섹션 */}
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                {project.githubUrl?.frontend && (
-                  <a href={project.githubUrl.frontend} target="_blank" className="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs hover:bg-white/10 transition-all">
-                    <Github size={16} /> FE GitHub
+              {/* ✅ GitHub FE/BE 분리 및 배포 링크 섹션 */}
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  {project.githubUrl?.frontend && (
+                    <a
+                      href={project.githubUrl.frontend}
+                      target="_blank"
+                      className="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs hover:bg-white/10 transition-all"
+                    >
+                      <Github size={16} /> FE GitHub
+                    </a>
+                  )}
+                  {project.githubUrl?.backend && (
+                    <a
+                      href={project.githubUrl.backend}
+                      target="_blank"
+                      className="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs hover:bg-white/10 transition-all"
+                    >
+                      <Github size={16} /> BE GitHub
+                    </a>
+                  )}
+                </div>
+
+                {project.deployUrl && (
+                  <a
+                    href={project.deployUrl}
+                    target="_blank"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-yonsei-blue text-white text-sm font-bold hover:bg-blue-600 transition-all"
+                  >
+                    <ExternalLink size={18} /> Live Demo
                   </a>
                 )}
-                {project.githubUrl?.backend && (
-                  <a href={project.githubUrl.backend} target="_blank" className="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs hover:bg-white/10 transition-all">
-                    <Github size={16} /> BE GitHub
-                  </a>
-                )}
-              </div>
-              
-              {project.deployUrl && (
-                <a href={project.deployUrl} target="_blank" className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-yonsei-blue text-white text-sm font-bold hover:bg-blue-600 transition-all">
-                  <ExternalLink size={18} /> Live Demo
-                </a>
-              )}
               </div>
             </div>
           </div>

@@ -15,14 +15,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="bg-black min-h-screen text-white selection:bg-likelion-orange selection:text-white">
-      <Navbar />
+    <>
       <div className="pt-12">
         <AboutContent />
         <TechStack />
         <Activities />
       </div>
       <Footer />
-    </main>
+    </>
   );
 }

@@ -46,7 +46,7 @@ export const SOCIAL_LINKS = {
   /** 구글 폼 URL — TODO: 실제 모집 폼 URL로 교체 필요 */
   googleForm: "https://forms.gle/yBA4eeH5GYj4nbnW6",
   /** 기술 블로그 URL */
-  techBlog: "https://techblog.likelion.net/",
+  techBlog: "https://blog.likelion-yonsei.com/",
 } as const;
 
 /* ─────────────────────────────────────────────

@@ -9,8 +9,7 @@ export const metadata = {
 
 export default function ApplyPage() {
   return (
-    <main className="bg-black min-h-screen text-white selection:bg-likelion-orange selection:text-white">
-      <Navbar />
+    <>
       <div className="pt-24">
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-6 text-center mb-8">
@@ -30,6 +29,6 @@ export default function ApplyPage() {
         </section>
       </div>
       <Footer />
-    </main>
+    </>
   );
 }

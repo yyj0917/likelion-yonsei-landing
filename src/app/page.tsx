@@ -8,7 +8,7 @@ import FAQ from "@/components/home/faq";
 import { SITE_CONFIG, SOCIAL_LINKS, ASSETS } from "@/constants/site";
 
 /** 빌드 시 정적 생성 (ISR/SSR 비활성화) */
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 /**
  * 메인(홈) 페이지
@@ -33,41 +33,39 @@ export default function Home() {
       {
         "@type": "Organization",
         "@id": `${SITE_CONFIG.url}/#organization`,
-        "name": SITE_CONFIG.name,
-        "alternateName": SITE_CONFIG.nameEn,
-        "url": SITE_CONFIG.url,
-        "logo": `${SITE_CONFIG.url}${ASSETS.favicon}`,
-        "description": SITE_CONFIG.description,
-        "address": {
+        name: SITE_CONFIG.name,
+        alternateName: SITE_CONFIG.nameEn,
+        url: SITE_CONFIG.url,
+        logo: `${SITE_CONFIG.url}${ASSETS.favicon}`,
+        description: SITE_CONFIG.description,
+        address: {
           "@type": "PostalAddress",
-          "addressLocality": "서울",
-          "addressRegion": "서울특별시",
-          "addressCountry": "KR"
+          addressLocality: "서울",
+          addressRegion: "서울특별시",
+          addressCountry: "KR",
         },
-        "sameAs": [
-          SOCIAL_LINKS.instagram
-        ]
+        sameAs: [SOCIAL_LINKS.instagram],
       },
       {
         "@type": "WebSite",
         "@id": `${SITE_CONFIG.url}/#website`,
-        "url": SITE_CONFIG.url,
-        "name": `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
-        "description": `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자 모집 중`,
-        "publisher": {
-          "@id": `${SITE_CONFIG.url}/#organization`
+        url: SITE_CONFIG.url,
+        name: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 모집`,
+        description: `${SITE_CONFIG.name} ${SITE_CONFIG.generation}기 아기사자 모집 중`,
+        publisher: {
+          "@id": `${SITE_CONFIG.url}/#organization`,
         },
-        "inLanguage": "ko-KR",
-        "potentialAction": {
+        inLanguage: "ko-KR",
+        potentialAction: {
           "@type": "SearchAction",
-          "target": {
+          target: {
             "@type": "EntryPoint",
-            "urlTemplate": `${SITE_CONFIG.url}/?q={search_term_string}`
+            urlTemplate: `${SITE_CONFIG.url}/?q={search_term_string}`,
           },
-          "query-input": "required name=search_term_string"
-        }
-      }
-    ]
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
   };
 
   return (
@@ -76,15 +74,12 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <main className="bg-black min-h-screen text-white selection:bg-likelion-orange selection:text-white">
-      <Navbar />
       <Hero />
       <About />
       <Tracks />
       <Timeline />
       <FAQ />
       <Footer />
-      </main>
     </>
   );
 }

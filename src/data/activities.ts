@@ -1,3 +1,5 @@
+import { SOCIAL_LINKS } from "@/constants/site";
+
 /**
  * @file 활동(Activities) 데이터
  * @description
@@ -174,7 +176,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     borderColor: "border-emerald-500/30",
     textColor: "text-emerald-300",
     shape: "pill",
-    href: "https://techblog.likelion.net/",
+    href: SOCIAL_LINKS.techBlog,
   },
   {
     id: 4,
@@ -240,8 +242,7 @@ export const ACTIVITIES_DATA: ActivityData[] = [
     id: 7,
     title: "아이디어톤",
     subtitle: "아이디어 피칭 대회",
-    description:
-      "문제 정의에서 시작해 실행 가능한 아이디어로 발전시킵니다.",
+    description: "문제 정의에서 시작해 실행 가능한 아이디어로 발전시킵니다.",
     details: [
       "매달 아이디어 피칭 세션",
       "부원 투표로 최종 5개 아이디어 선정",

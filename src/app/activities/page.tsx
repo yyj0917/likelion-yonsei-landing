@@ -6,13 +6,11 @@ export const dynamic = "force-static";
 
 export default function ActivitiesPage() {
   return (
-    <main className="bg-black min-h-screen text-white selection:bg-likelion-orange selection:text-white">
-      <Navbar />
+    <>
       <div className="pt-12">
         <ActivityGrid />
       </div>
       <Footer />
-    </main>
+    </>
   );
 }
-
