@@ -61,7 +61,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     highlight: false,
   },
   {
-    date: "03.05 (목) ~ 03.06 (금)",
+    date: "03.05 (목) ~ 03.07 (토)",
     title: "면접 진행",
     description: "연세대학교 신촌캠퍼스에서 대면 면접이 진행됩니다.",
     highlight: false,
