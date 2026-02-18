@@ -23,18 +23,9 @@ export default function Hero() {
   
     let animationFrameId: number;
     let stars: any[] = [];
+    let scrollProgress = 0;
   
-    const STAR_COUNT = 1500;
-  
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-  
-    let currentRotationX = 0;
-    let currentRotationY = 0;
-    let targetRotationX = 0;
-    let targetRotationY = 0;
-  
-    const MAX_ROTATION = 0.35; // 과도한 회전 방지
+    const STAR_COUNT = 2500;
   
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -44,38 +35,37 @@ export default function Hero() {
   
     const initStars = () => {
       stars = [];
-    
+      
       for (let i = 0; i < STAR_COUNT; i++) {
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(Math.random() * 2 - 1);
+        const radius = 600 + Math.random() * 600;
     
-        let radius;
-        let isCenter = Math.random() < 0.6;
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.sin(phi) * Math.sin(theta);
+        const z = radius * Math.cos(phi);
     
-        if (isCenter) {
-          radius = 400 + Math.random() * 400; // 중앙 영역
-        } else {
-          radius = 800 + Math.random() * 400; // 외곽 영역
-        }
+        // ⭐ 스펙트럼 분포
+        const spectrumRand = Math.random();
+        let type: "blue" | "white" | "yellow" = "white";
     
-        let x = radius * Math.sin(phi) * Math.cos(theta);
-        let y = radius * Math.sin(phi) * Math.sin(theta);
-        let z = radius * Math.cos(phi);
-    
-        // 💎 핵심: 중앙 영역만 타원형 왜곡
-        if (isCenter) {
-          y *= 0.55;   // 세로 압축 (0.4~0.7 사이 추천)
-          z *= 1.1;    // 깊이 살짝 증가
-        }
+        if (spectrumRand < 0.05) type = "yellow";   // 15%
+        else if (spectrumRand < 0.45) type = "blue"; // 30%
+        else type = "white";                         // 55%
     
         stars.push({
           x,
           y,
           z,
           size: Math.random() * 1.2 + 0.4,
-          vx: (Math.random() - 0.5) * 0.02,
-          vy: (Math.random() - 0.5) * 0.02,
-          vz: (Math.random() - 0.5) * 0.02,
+          vx: (Math.random() - 0.5) * 0.04,
+          vy: (Math.random() - 0.5) * 0.04,
+          vz: (Math.random() - 0.5) * 0.04,
+          type,
+          hasFlare: Math.random() < 0.2,     // 5% flare
+          hasTwinkle: Math.random() < 0.3,   // 10% twinkle
+          twinklePhase: Math.random() * Math.PI * 2,
+          flareAngle: Math.random() * Math.PI,
         });
       }
     };
@@ -83,92 +73,203 @@ export default function Hero() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
   
+      // 배경
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
       gradient.addColorStop(0, "#020205");
       gradient.addColorStop(1, "#001E40");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-      // 🔥 마우스 → 회전값 계산
-      const normalizedX = (mouseX / canvas.width - 0.5) * 2;
-      const normalizedY = (mouseY / canvas.height - 0.5) * 2;
+      const rotationY = scrollProgress * 0.5;
   
-      targetRotationY = normalizedX * MAX_ROTATION;
-      targetRotationX = normalizedY * MAX_ROTATION;
+      const projected: any[] = [];
   
-      // 🔥 부드러운 보간
-      currentRotationX += (targetRotationX - currentRotationX) * 0.05;
-      currentRotationY += (targetRotationY - currentRotationY) * 0.05;
-  
-      const cosY = Math.cos(currentRotationY);
-      const sinY = Math.sin(currentRotationY);
-      const cosX = Math.cos(currentRotationX);
-      const sinX = Math.sin(currentRotationX);
-  
+      // ⭐ 3D 투영
       stars.forEach((star) => {
-        // ----- Y축 회전 -----
-        let x = star.x * cosY - star.z * sinY;
-        let z = star.x * sinY + star.z * cosY;
-        let y = star.y;
+        const cosY = Math.cos(rotationY);
+        const sinY = Math.sin(rotationY);
   
-        // ----- X축 회전 -----
-        let y2 = y * cosX - z * sinX;
-        z = y * sinX + z * cosX;
+        const x = star.x * cosY - star.z * sinY;
+        const z = star.x * sinY + star.z * cosY;
   
-        // 카메라 앞에 있는 별만 그림
-        if (z <= -800) return;
-  
-        let perspective = 900 / (900 + z);
-  
-        // 과도한 확대 방지
-        perspective = Math.min(perspective, 3);
+        const perspective = 900 / (900 + z);
   
         const screenX = x * perspective + canvas.width / 2;
-        const screenY = y2 * perspective + canvas.height / 2 + 60;
-  
-        // drift
+        const screenY = star.y * perspective + canvas.height / 2;
+
+        // 🌌 subtle drift
         star.x += star.vx;
         star.y += star.vy;
         star.z += star.vz;
-  
+
+        // 공간 경계 유지
         const maxRadius = 1200;
-        const dist = Math.sqrt(star.x ** 2 + star.y ** 2 + star.z ** 2);
+        const dist = Math.sqrt(star.x**2 + star.y**2 + star.z**2);
         if (dist > maxRadius) {
           star.x *= 0.95;
           star.y *= 0.95;
           star.z *= 0.95;
         }
   
-        const radius = star.size * perspective;
-        if (!isFinite(radius) || radius <= 0) return;
+        projected.push({
+          screenX,
+          screenY,
+          z,
+          perspective,
+          size: star.size * perspective,
+          connections: 0,
+        });
   
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(
-          0.08,
-          perspective * 0.9
-        )})`;
-  
+        const depth = 900 + z;
+        if (depth <= 50) return;
+        
+        const radius = Math.max(
+          0.2,
+          star.size * Math.pow(perspective, 0.6)
+        );
+        if (!isFinite(radius)) return;
+        
+        const depthFactor = Math.min(1, Math.max(0, perspective));
+        
+        const isWarm = Math.random() < 0.05;
+
+        let r = 255;
+        let g = 255;
+        let b = 255;
+        
+        if (isWarm) {
+          g = 235 + Math.random() * 15;
+          b = 200 + Math.random() * 25;
+        }
+        
+        // 🌠 트윙클
+        let twinkleBoost = 1;
+        if (star.hasTwinkle) {
+          const t = performance.now() * 0.002;
+          twinkleBoost = 0.7 + Math.sin(t + star.twinklePhase) * 0.3;
+        }
+        
+        const alpha = Math.max(0.08, perspective * 0.9) * twinkleBoost;
+        
+        // ⭐ 글로우 (가까운 별만)
+        if (perspective > 0.5) {
+          const glowRadius = radius * 3;
+        
+          const glow = ctx.createRadialGradient(
+            screenX,
+            screenY,
+            0,
+            screenX,
+            screenY,
+            glowRadius
+          );
+        
+          glow.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.6})`);
+          glow.addColorStop(0.4, `rgba(${r},${g},${b},${alpha * 0.25})`);
+          glow.addColorStop(1, "rgba(255,255,255,0)");
+        
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(screenX, screenY, glowRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        
+        // ⭐ 중심 코어
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
         ctx.beginPath();
         ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
         ctx.fill();
+        
+        // ✨ 십자형 flare (아주 일부만)
+        if (star.hasFlare && perspective > 0.6) {
+          const flareSize = radius * 8;
+          const angle = star.flareAngle;
+        
+          const dx = Math.cos(angle) * flareSize;
+          const dy = Math.sin(angle) * flareSize;
+        
+          const gradient = ctx.createLinearGradient(
+            screenX - dx,
+            screenY - dy,
+            screenX + dx,
+            screenY + dy
+          );
+        
+          gradient.addColorStop(0, "rgba(255,255,255,0)");
+          gradient.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.8})`);
+          gradient.addColorStop(1, "rgba(255,255,255,0)");
+        
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(screenX - dx, screenY - dy);
+          ctx.lineTo(screenX + dx, screenY + dy);
+          ctx.stroke();
+        
+          // 대각선 방향 하나 더 (45도 offset)
+          const angle2 = angle + Math.PI / 2;
+          const dx2 = Math.cos(angle2) * flareSize;
+          const dy2 = Math.sin(angle2) * flareSize;
+        
+          const gradient2 = ctx.createLinearGradient(
+            screenX - dx2,
+            screenY - dy2,
+            screenX + dx2,
+            screenY + dy2
+          );
+        
+          gradient2.addColorStop(0, "rgba(255,255,255,0)");
+          gradient2.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.6})`);
+          gradient2.addColorStop(1, "rgba(255,255,255,0)");
+        
+          ctx.strokeStyle = gradient2;
+          ctx.beginPath();
+          ctx.moveTo(screenX - dx2, screenY - dy2);
+          ctx.lineTo(screenX + dx2, screenY + dy2);
+          ctx.stroke();
+        }
       });
   
       animationFrameId = requestAnimationFrame(draw);
     };
   
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    // 스크롤 제어
+    let progress = 0;
+    let locked = true;
+  
+    document.body.style.overflow = "hidden";
+  
+    const handleWheel = (e: WheelEvent) => {
+      if (!locked) return;
+      e.preventDefault();
+  
+      progress += e.deltaY * 0.0006;
+      progress = Math.max(0, Math.min(1, progress));
+  
+      scrollProgress = progress;
+  
+      if (progress >= 1) {
+        locked = false;
+        document.body.style.overflow = "auto";
+  
+        setTimeout(() => {
+          window.scrollTo({
+            top: window.innerHeight,
+            behavior: "smooth",
+          });
+        }, 200);
+      }
     };
   
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("resize", resizeCanvas);
   
     resizeCanvas();
     draw();
   
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
