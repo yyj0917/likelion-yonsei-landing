@@ -23,9 +23,18 @@ export default function Hero() {
   
     let animationFrameId: number;
     let stars: any[] = [];
-    let scrollProgress = 0;
   
-    const STAR_COUNT = 2500;
+    const STAR_COUNT = 1500;
+  
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+  
+    let currentRotationX = 0;
+    let currentRotationY = 0;
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+  
+    const MAX_ROTATION = 0.35; // 과도한 회전 방지
   
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -35,17 +44,30 @@ export default function Hero() {
   
     const initStars = () => {
       stars = [];
-  
+    
       for (let i = 0; i < STAR_COUNT; i++) {
-        // 🌌 구형 분포 (중앙 몰림 제거)
         const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-        const radius = 600 + Math.random() * 600;
-  
-        const x = radius * Math.sin(phi) * Math.cos(theta);
-        const y = radius * Math.sin(phi) * Math.sin(theta);
-        const z = radius * Math.cos(phi);
-  
+        const phi = Math.acos(Math.random() * 2 - 1);
+    
+        let radius;
+        let isCenter = Math.random() < 0.6;
+    
+        if (isCenter) {
+          radius = 400 + Math.random() * 400; // 중앙 영역
+        } else {
+          radius = 800 + Math.random() * 400; // 외곽 영역
+        }
+    
+        let x = radius * Math.sin(phi) * Math.cos(theta);
+        let y = radius * Math.sin(phi) * Math.sin(theta);
+        let z = radius * Math.cos(phi);
+    
+        // 💎 핵심: 중앙 영역만 타원형 왜곡
+        if (isCenter) {
+          y *= 0.55;   // 세로 압축 (0.4~0.7 사이 추천)
+          z *= 1.1;    // 깊이 살짝 증가
+        }
+    
         stars.push({
           x,
           y,
@@ -54,8 +76,6 @@ export default function Hero() {
           vx: (Math.random() - 0.5) * 0.02,
           vy: (Math.random() - 0.5) * 0.02,
           vz: (Math.random() - 0.5) * 0.02,
-          twinklePhase: Math.random() * Math.PI * 2,
-          connections: 0,
         });
       }
     };
@@ -63,146 +83,92 @@ export default function Hero() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-      // 배경
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
       gradient.addColorStop(0, "#020205");
       gradient.addColorStop(1, "#001E40");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-      const rotationY = scrollProgress * 0.5;
+      // 🔥 마우스 → 회전값 계산
+      const normalizedX = (mouseX / canvas.width - 0.5) * 2;
+      const normalizedY = (mouseY / canvas.height - 0.5) * 2;
   
-      const projected: any[] = [];
+      targetRotationY = normalizedX * MAX_ROTATION;
+      targetRotationX = normalizedY * MAX_ROTATION;
   
-      // ⭐ 3D 투영
+      // 🔥 부드러운 보간
+      currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+      currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+  
+      const cosY = Math.cos(currentRotationY);
+      const sinY = Math.sin(currentRotationY);
+      const cosX = Math.cos(currentRotationX);
+      const sinX = Math.sin(currentRotationX);
+  
       stars.forEach((star) => {
-        const cosY = Math.cos(rotationY);
-        const sinY = Math.sin(rotationY);
+        // ----- Y축 회전 -----
+        let x = star.x * cosY - star.z * sinY;
+        let z = star.x * sinY + star.z * cosY;
+        let y = star.y;
   
-        const x = star.x * cosY - star.z * sinY;
-        const z = star.x * sinY + star.z * cosY;
+        // ----- X축 회전 -----
+        let y2 = y * cosX - z * sinX;
+        z = y * sinX + z * cosX;
   
-        const perspective = 900 / (900 + z);
+        // 카메라 앞에 있는 별만 그림
+        if (z <= -800) return;
+  
+        let perspective = 900 / (900 + z);
+  
+        // 과도한 확대 방지
+        perspective = Math.min(perspective, 3);
   
         const screenX = x * perspective + canvas.width / 2;
-        const screenY = star.y * perspective + canvas.height / 2;
-
-        // 🌌 subtle drift
+        const screenY = y2 * perspective + canvas.height / 2 + 60;
+  
+        // drift
         star.x += star.vx;
         star.y += star.vy;
         star.z += star.vz;
-
-        // 공간 경계 유지
+  
         const maxRadius = 1200;
-        const dist = Math.sqrt(star.x**2 + star.y**2 + star.z**2);
+        const dist = Math.sqrt(star.x ** 2 + star.y ** 2 + star.z ** 2);
         if (dist > maxRadius) {
           star.x *= 0.95;
           star.y *= 0.95;
           star.z *= 0.95;
         }
   
-        projected.push({
-          screenX,
-          screenY,
-          z,
-          perspective,
-          size: star.size * perspective,
-          connections: 0,
-        });
+        const radius = star.size * perspective;
+        if (!isFinite(radius) || radius <= 0) return;
   
-        const depth = 900 + z;
-        if (depth <= 50) return;
-        
-        const radius = Math.max(0.1, star.size * perspective);
-        if (!isFinite(radius)) return;
-        
         ctx.fillStyle = `rgba(255,255,255,${Math.max(
           0.08,
           perspective * 0.9
         )})`;
-        
+  
         ctx.beginPath();
         ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
         ctx.fill();
       });
   
-      // ⭐ 엄격한 연결선
-      const MAX_DISTANCE = 100;
-      const MAX_DEPTH_DIFF = 120;
-  
-      for (let i = 0; i < projected.length; i++) {
-        if (projected[i].connections >= 2) continue;
-  
-        for (let j = i + 1; j < projected.length; j++) {
-          if (projected[j].connections >= 2) continue;
-  
-          const dx = projected[i].screenX - projected[j].screenX;
-          const dy = projected[i].screenY - projected[j].screenY;
-  
-          if (Math.abs(dx) > MAX_DISTANCE) continue;
-          if (Math.abs(dy) > MAX_DISTANCE) continue;
-  
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const depthDiff = Math.abs(projected[i].z - projected[j].z);
-  
-          if (dist < MAX_DISTANCE && depthDiff < MAX_DEPTH_DIFF) {
-            const alpha = 0.18 * (1 - dist / MAX_DISTANCE);
-  
-            ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(projected[i].screenX, projected[i].screenY);
-            ctx.lineTo(projected[j].screenX, projected[j].screenY);
-            ctx.stroke();
-  
-            projected[i].connections++;
-            projected[j].connections++;
-  
-            if (projected[i].connections >= 2) break;
-          }
-        }
-      }
-  
       animationFrameId = requestAnimationFrame(draw);
     };
   
-    // 스크롤 제어
-    let progress = 0;
-    let locked = true;
-  
-    document.body.style.overflow = "hidden";
-  
-    const handleWheel = (e: WheelEvent) => {
-      if (!locked) return;
-      e.preventDefault();
-  
-      progress += e.deltaY * 0.0006;
-      progress = Math.max(0, Math.min(1, progress));
-  
-      scrollProgress = progress;
-  
-      if (progress >= 1) {
-        locked = false;
-        document.body.style.overflow = "auto";
-  
-        setTimeout(() => {
-          window.scrollTo({
-            top: window.innerHeight,
-            behavior: "smooth",
-          });
-        }, 200);
-      }
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
   
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("resize", resizeCanvas);
   
     resizeCanvas();
     draw();
   
     return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
