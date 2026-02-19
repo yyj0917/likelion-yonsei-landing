@@ -88,7 +88,7 @@ export function ApplicationForm() {
         </div>
         <p className="text-white text-lg font-bold">{status.label}</p>
         <p className="text-gray-400 text-sm mt-1">
-          접수 기간: 2026.02.19 (목) 00:00 ~ 02.25 (수) 23:59
+          접수 기간: 2026.02.19 (목) 00:00 ~ 02.26 (목) 23:59
         </p>
       </div>
 

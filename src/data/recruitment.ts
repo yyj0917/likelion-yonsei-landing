@@ -48,7 +48,7 @@ export const APPLICATION_PERIOD = {
 
 export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
   {
-    date: "02.19 (목) ~ 02.25 (수)",
+    date: "02.19 (목) ~ 02.26 (목)",
     title: "서류 접수",
     description: "구글 폼을 통해 지원서를 제출합니다. 시간을 엄수해주세요.",
     highlight: true,
