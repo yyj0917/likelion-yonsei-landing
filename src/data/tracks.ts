@@ -87,7 +87,7 @@ export const TRACKS: Track[] = [
     description:
       "서비스의 핵심 로직과 데이터를 관리합니다. 서버 아키텍처를 설계하고, 안정적이고 효율적인 API를 구축하는 능력을 기릅니다.",
     iconName: "server",
-    skills: ["Python/Django", "Java/Spring", "Database", "AWS/Deploy"],
+    skills: ["Java/Spring", "Database", "AWS/Deploy"],
     color: "from-emerald-400 to-cyan-500",
   },
   {
@@ -163,15 +163,15 @@ export const TRACK_DETAILS: TrackDetail[] = [
     title: "백엔드",
     subtitle: "Backend Development",
     description:
-      "Spring Boot 기반의 견고한 서버 아키텍처를 설계하고 구축합니다. API 설계부터 배포, 운영까지 실제 서비스의 뼈대를 책임지는 백엔드를 경험합니다.",
+      "Spring 기반의 견고한 서버 아키텍처를 설계하고 구축합니다. API 설계부터 배포, 운영까지 실제 서비스의 뼈대를 책임지는 백엔드를 경험합니다.",
     highlights: [
-      "Spring Boot 기반 서버 개발",
+      "Spring 기반 서버 개발",
       "RESTful API 설계 및 아키텍처 구성",
       "AWS 배포 및 CI/CD 자동화",
       "DB 설계와 성능 최적화",
     ],
     techStack: [
-      { name: "Spring Boot", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
+      { name: "Spring", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
       { name: "Java", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
       { name: "AWS", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
       { name: "CI/CD", color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
