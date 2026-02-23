@@ -37,7 +37,7 @@ export interface RecruitmentTimelineItem {
 
 export const APPLICATION_PERIOD = {
   start: new Date("2026-02-19T00:00:00+09:00"),
-  end: new Date("2026-02-25T23:59:59+09:00"),
+  end: new Date("2026-02-26T23:59:59+09:00"),
 } as const;
 
 /* ─────────────────────────────────────────────
