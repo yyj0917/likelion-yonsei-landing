@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SITE_CONFIG } from "@/constants/site";
 import Navbar from "@/components/home/navbar";
+import { Analytics } from "@vercel/analytics/next";
 
 /**
  * 사이트 메타데이터 — SITE_CONFIG에서 동적으로 생성
@@ -69,6 +70,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );
