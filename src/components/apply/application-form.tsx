@@ -88,7 +88,7 @@ export function ApplicationForm() {
         </div>
         <p className="text-white text-lg font-bold">{status.label}</p>
         <p className="text-gray-400 text-sm mt-1">
-          추기 접수 기간: 2026.02.27 (금) 00:00 ~ 03.01 (토) 23:59
+          추기 접수 기간: 2026.02.27 (금) 00:00 ~ 03.01 (일) 23:59
         </p>
       </div>
 

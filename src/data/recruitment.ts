@@ -54,7 +54,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     highlight: false,
   },
   {
-    date: "02.27 (금) ~ 03.01 (토)",
+    date: "02.27 (금) ~ 03.01 (일)",
     title: "추가 서류 접수",
     description: "기획/디자인, 프론트엔드 파트에 한해 추가 모집을 진행합니다.",
     highlight: true,
