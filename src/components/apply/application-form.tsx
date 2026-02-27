@@ -37,7 +37,7 @@ function getApplicationStatus(now: Date) {
 
   return {
     isOpen: true,
-    label: '서류 접수가 진행 중입니다!',
+    label: '추가 서류 접수가 진행 중입니다!',
     buttonText: '지원하기',
   };
 }
@@ -88,7 +88,7 @@ export function ApplicationForm() {
         </div>
         <p className="text-white text-lg font-bold">{status.label}</p>
         <p className="text-gray-400 text-sm mt-1">
-          접수 기간: 2026.02.19 (목) 00:00 ~ 02.26 (목) 23:59
+          추기 접수 기간: 2026.02.27 (금) 00:00 ~ 03.01 (토) 23:59
         </p>
       </div>
 
@@ -97,7 +97,7 @@ export function ApplicationForm() {
         <h2 className="text-2xl font-bold text-white mb-6 text-center">
           모집 트랙
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {APPLY_TRACKS.map((track) => (
             <Card
               key={track.name}

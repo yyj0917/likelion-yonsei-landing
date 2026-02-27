@@ -197,9 +197,11 @@ export const APPLY_TRACKS: ApplyTrack[] = [
     description: "아이디어를 화면 위에 구현합니다. React를 기반으로 실제 서비스 UI를 설계하고 개발합니다.",
     icon: "🖥️",
   },
+  /*
   {
     name: "Backend",
     description: "눈에 보이지 않는 영역을 설계합니다. API부터 서버 구조까지, 서비스의 뼈대를 만듭니다.",
     icon: "⚙️",
   },
+  */
 ];
