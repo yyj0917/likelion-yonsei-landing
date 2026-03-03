@@ -70,6 +70,10 @@ export default function Footer() {
                     <span className="text-gray-500 ml-3">파트장</span>
                   </div>
                   <div className="flex justify-center md:justify-start">
+                    <span className="inline-block w-16 text-left">구서영</span>
+                    <span className="text-gray-500 ml-3">운영진</span>
+                  </div>
+                  <div className="flex justify-center md:justify-start">
                     <span className="inline-block w-16 text-left">오은성</span>
                     <span className="text-gray-500 ml-3">운영진</span>
                   </div>
