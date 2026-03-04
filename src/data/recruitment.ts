@@ -57,7 +57,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "02.27 (금) ~ 03.01 (일)",
     title: "추가 서류 접수",
     description: "기획/디자인, 프론트엔드 파트에 한해 추가 모집을 진행합니다.",
-    highlight: true,
+    highlight: false,
   },
   {
     date: "03.02 (화)",
@@ -70,7 +70,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "03.05 (목) ~ 03.07 (토)",
     title: "면접 진행",
     description: "연세대학교 신촌캠퍼스에서 대면 면접이 진행됩니다.",
-    highlight: false,
+    highlight: true,
   },
   {
     date: "03.09 (월)",
