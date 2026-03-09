@@ -70,7 +70,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "03.05 (목) ~ 03.07 (토)",
     title: "면접 진행",
     description: "연세대학교 신촌캠퍼스에서 대면 면접이 진행됩니다.",
-    highlight: true,
+    highlight: false,
   },
   {
     date: "03.09 (월)",
@@ -82,6 +82,6 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "03.12 (목)",
     title: `${SITE_CONFIG.generation}기 오리엔테이션`,
     description: "모든 합격자는 필수로 참석해야 합니다.",
-    highlight: false,
+    highlight: true,
   },
 ];
