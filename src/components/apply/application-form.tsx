@@ -37,7 +37,7 @@ function getApplicationStatus(now: Date) {
 
   return {
     isOpen: true,
-    label: '추가 서류 접수가 진행 중입니다!',
+    label: '서류 접수가 진행 중입니다!',
     buttonText: '지원하기',
   };
 }
