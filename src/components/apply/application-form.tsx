@@ -97,7 +97,7 @@ export function ApplicationForm() {
         <h2 className="text-2xl font-bold text-white mb-6 text-center">
           모집 트랙
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {APPLY_TRACKS.map((track) => (
             <Card
               key={track.name}
