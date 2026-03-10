@@ -29,14 +29,14 @@ function getApplicationStatus(now: Date) {
 
   if (now > APPLICATION_PERIOD.end) {
     return {
-      isOpen: false,
+      isOpen: true,
       label: '서류 접수가 마감되었습니다',
       buttonText: '접수가 마감되었습니다',
     };
   }
 
   return {
-    isOpen: true,
+    isOpen: false,
     label: '서류 접수가 진행 중입니다!',
     buttonText: '지원하기',
   };
