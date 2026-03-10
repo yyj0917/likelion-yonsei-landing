@@ -37,7 +37,7 @@ export interface RecruitmentTimelineItem {
 
 export const APPLICATION_PERIOD = {
   start: new Date("2026-02-27T00:00:00+09:00"),
-  end: new Date("2026-03-01T23:59:59+09:00"),
+  end: new Date("2026-03-11T23:59:59+09:00"),
 } as const;
 
 /* ─────────────────────────────────────────────
@@ -51,7 +51,7 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "02.19 (목) ~ 02.26 (목)",
     title: "서류 접수",
     description: "구글 폼을 통해 지원서를 제출합니다. 시간을 엄수해주세요.",
-    highlight: false,
+    highlight: true,
   },
   {
     date: "02.27 (금) ~ 03.01 (일)",
@@ -82,6 +82,6 @@ export const RECRUITMENT_TIMELINE: RecruitmentTimelineItem[] = [
     date: "03.12 (목)",
     title: `${SITE_CONFIG.generation}기 오리엔테이션`,
     description: "모든 합격자는 필수로 참석해야 합니다.",
-    highlight: true,
+    highlight: false,
   },
 ];
